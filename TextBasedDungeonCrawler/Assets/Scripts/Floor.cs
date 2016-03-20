@@ -17,6 +17,9 @@ public class Floor : MonoBehaviour {
 		Room r1 = ScriptableObject.CreateInstance<Room>();
 		r1.Description = "Starting room";
 		r1.EntranceToPreviousFloor = true;
+		HealingPotion pot = ScriptableObject.CreateInstance<HealingPotion>();
+		pot.name = "Healing Potion";
+		r1.Items.Add (pot);
 
 		Room r2 = ScriptableObject.CreateInstance<Room>();
 
@@ -96,6 +99,9 @@ public class Floor : MonoBehaviour {
 				print ("That way is blocked");
 				print (roomArray2d [x, y].Description);
 			}
+		}
+		else if (Input.GetKeyDown (KeyCode.I)) {
+			print ("The rooms contains: " + (roomArray2d [x, y].Items[0].Name));
 		}
 
 	}

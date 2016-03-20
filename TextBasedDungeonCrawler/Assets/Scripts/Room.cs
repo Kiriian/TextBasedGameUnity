@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Room : ScriptableObject{
 
@@ -8,6 +9,7 @@ public class Room : ScriptableObject{
 	private bool loot;
 	private bool entranceToPreviousFloor;
 	private bool exitToNextFloor;
+	private List<Item> items = new List<Item>();
 
 	public Room ()
 	{
@@ -50,5 +52,11 @@ public class Room : ScriptableObject{
 	{
 		get { return this.exitToNextFloor; }
 		set { this.exitToNextFloor = value; }
+	}
+
+	public List<Item> Items {
+
+		get { return this.items; }
+
 	}
 }
