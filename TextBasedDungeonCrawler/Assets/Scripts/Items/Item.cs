@@ -3,7 +3,7 @@ using System.Collections;
 
 public class Item : ScriptableObject {
 
-	public string name;
+	public string itemName;
 	public int carryLimit;
 	public int heldQuantity;
 
