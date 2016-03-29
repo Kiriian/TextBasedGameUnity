@@ -10,26 +10,11 @@ public class Room : ScriptableObject{
 	private bool entranceToPreviousFloor;
 	private bool entranceToNextFloor;
 	private List<Item> items = new List<Item>();
-	private bool north;
-	private bool west;
-	private bool east;
-	private bool south;
+	private List<Direction> directions = new List<Direction>();
+
 
 	public Room ()
 	{
-	}
-
-	public Room (string description,bool bossRoom, bool loot, bool entranceToPreviousFloor, bool entranceToNextFloor, bool north, bool south, bool east, bool west)
-	{
-		this.description = description;
-		this.bossRoom = bossRoom;
-		this.loot = loot;
-		this.entranceToPreviousFloor = entranceToPreviousFloor;
-		this.entranceToNextFloor = entranceToNextFloor;
-		this.north = north;
-		this.south = south;
-		this.east = east;
-		this.west = west;
 	}
 
 	public string Description
@@ -62,28 +47,10 @@ public class Room : ScriptableObject{
 		set { this.entranceToNextFloor = value; }
 	}
 
-	public bool East
-	{
-		get { return this.east; }
-		set { this.east = value; }
-	}
+	public List<Direction> Directions {
 
-	public bool West
-	{
-		get { return this.west; }
-		set { this.west = value; }
-	}
+		get { return this.directions; }
 
-	public bool South
-	{
-		get { return this.south; }
-		set { this.south = value; }
-	}
-
-	public bool North
-	{
-		get { return this.north; }
-		set { this.north = value; }
 	}
 
 	public List<Item> Items {
