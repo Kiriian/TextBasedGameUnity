@@ -11,6 +11,7 @@ public class HealingPotion : Potions {
 
 	// Implement method that, when run, increases player's current HP towards a set limit.
 
+
 }
 
 public class StrengthPotion : Potions {

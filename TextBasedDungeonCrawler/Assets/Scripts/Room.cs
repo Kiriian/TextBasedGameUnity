@@ -11,7 +11,16 @@ public class Room : ScriptableObject{
 	private bool entranceToNextFloor;
 	private List<Item> items = new List<Item>();
 	private List<Direction> directions = new List<Direction>();
+	private Monster roomMonster;
 
+	public Monster RoomMonster {
+		get {
+			return this.roomMonster;
+		}
+		set {
+			roomMonster = value;
+		}
+	}
 
 	public Room ()
 	{

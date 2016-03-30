@@ -20,6 +20,7 @@ public class Movement : ScriptableObject {
 			if (roomArray [x, y].EntranceToNextFloor == true) {
 				return roomArray [x, y].Description + "\r\n" + Options (roomArray [x, y]) + "\r\n" + moveToNextFloor;
 			}
+
 			return roomArray [x, y].Description + "\r\n" + Options (roomArray [x, y]);
 		} else {
 			return blocked + "\r\n" + MoveNorth (roomArray);

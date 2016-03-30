@@ -22,6 +22,17 @@ public class Player : Actor {
 	}
 
 	/// <summary>
+	/// Sets up a test player. Implemented mostly for initial testing of combat and player activity.
+	/// </summary>
+	public void InitTestPlayer(){
+		actorName = "Test";
+		maxHealth = 30;
+		currentHealth = 30;
+		maxMana = 30;
+		currentMana = 30;
+	}
+
+	/// <summary>
 	/// Returns all of the items the player is currently holding.
 	/// </summary>
 	/// <value>The give all held items.</value>

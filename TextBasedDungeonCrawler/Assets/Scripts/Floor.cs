@@ -5,7 +5,11 @@ using WindowsInput;
 public class Floor : MonoBehaviour {
 
 	private Movement m;
+	private Player p;
+	// Temporary for testing.
+	private Monster mon;
 	private Room[,] roomArray2d;
+	private CombatEngine ce;
 	private int x = 0; 
 	private int y = 0;
 	private int xAxis;
@@ -14,7 +18,16 @@ public class Floor : MonoBehaviour {
 
 	void Start () {
 
+		p = ScriptableObject.CreateInstance<Player> ();
+		p.InitTestPlayer();
+
+		// Temporary for testing.
+		mon = ScriptableObject.CreateInstance<Monster>();
+		mon.InitTestMonster ();
+
 		m = ScriptableObject.CreateInstance<Movement>();
+
+		ce = ScriptableObject.CreateInstance<CombatEngine> ();
 
 		Direction north = ScriptableObject.CreateInstance<Direction> ();
 		north.DirectionName = "North";
@@ -26,19 +39,21 @@ public class Floor : MonoBehaviour {
 		east.DirectionName = "East";
 
 
+
 		Room r1 = ScriptableObject.CreateInstance<Room>();
 		r1.Description = "Starting room";
 		HealingPotion pot = ScriptableObject.CreateInstance<HealingPotion>();
 		pot.name = "Healing Potion";
 		r1.Items.Add (pot);
 		r1.Directions.Add (south);
-
+		r1.RoomMonster = mon;
 
 		Room r2 = ScriptableObject.CreateInstance<Room>();
 		r2.Description = "A Narrow Hallway with some Unburned Torchs";
 		r2.Directions.Add (south);
 		r2.Directions.Add (north);
 		r2.Directions.Add (east);
+
 
 
 		Room r3 =  ScriptableObject.CreateInstance<Room>();
@@ -70,7 +85,7 @@ public class Floor : MonoBehaviour {
 	void Update()
 	{
 		xAxis = roomArray2d.GetLength (0)-1;
-		yAxis = roomArray2d.GetLength (1)-1;
+		yAxis = roomArray2d.GetLength (1) - 1;
 
 		if (Input.GetKeyDown (KeyCode.DownArrow)) {
 			print (m.MoveSouth(roomArray2d));
@@ -81,13 +96,16 @@ public class Floor : MonoBehaviour {
 		} else if (Input.GetKeyDown (KeyCode.LeftArrow)) {
 			print (m.MoveEast(roomArray2d));
 		} else if (Input.GetKeyDown (KeyCode.I)) {
-			print ("The rooms contains: " + (roomArray2d [x, y].Items [0].Name));
+			print ("The rooms contains: " + (roomArray2d [x,y].Items [0].Name));
 		} else if (Input.GetKeyDown (KeyCode.Space)) {
 			roomArray2d = m.MoveToNextFloor ();
 			print (m.MoveSouth (roomArray2d));
+		} else if (Input.GetKeyDown(KeyCode.A)){
+			print (ce.Attack (roomArray2d,x,y));	
 		}
 
 
 	}
+
 }
 	
