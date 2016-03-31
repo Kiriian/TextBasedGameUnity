@@ -1,10 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
-using WindowsInput;
+using UnityEngine.UI;
 
 public class Floor : MonoBehaviour {
 
 	private Movement m;
+	public Text textfield;
 	private Player p;
 	// Temporary for testing.
 	private Monster mon;
@@ -12,12 +13,9 @@ public class Floor : MonoBehaviour {
 	private CombatEngine ce;
 	private int x = 0; 
 	private int y = 0;
-	private int xAxis;
-	private int yAxis;
 
 
 	void Start () {
-
 		p = ScriptableObject.CreateInstance<Player> ();
 		p.InitTestPlayer();
 
@@ -39,7 +37,6 @@ public class Floor : MonoBehaviour {
 		east.DirectionName = "East";
 
 
-
 		Room r1 = ScriptableObject.CreateInstance<Room>();
 		r1.Description = "Starting room";
 		HealingPotion pot = ScriptableObject.CreateInstance<HealingPotion>();
@@ -53,8 +50,6 @@ public class Floor : MonoBehaviour {
 		r2.Directions.Add (south);
 		r2.Directions.Add (north);
 		r2.Directions.Add (east);
-
-
 
 		Room r3 =  ScriptableObject.CreateInstance<Room>();
 		r3.Description = "A Long Room with Cages Dangeling from the Celling";
@@ -79,29 +74,27 @@ public class Floor : MonoBehaviour {
 		roomArray2d [2, 0] = r4;
 		roomArray2d [3, 0] = r5;
 
-		print (roomArray2d [0, 0].Description + " " + m.Options(roomArray2d[0,0]));
+		textfield.text += roomArray2d[0, 0].Description + "\r\n" + m.Options(roomArray2d[0,0]);
+
 	}
 
 	void Update()
 	{
-		xAxis = roomArray2d.GetLength (0)-1;
-		yAxis = roomArray2d.GetLength (1) - 1;
-
 		if (Input.GetKeyDown (KeyCode.DownArrow)) {
-			print (m.MoveSouth(roomArray2d));
+			textfield.text += "\r\n" + m.MoveSouth(roomArray2d);
 		} else if (Input.GetKeyDown (KeyCode.UpArrow)) {
-			print (m.MoveNorth(roomArray2d));
+			textfield.text += "\r\n" + m.MoveNorth(roomArray2d);
 		} else if (Input.GetKeyDown (KeyCode.RightArrow)) {
-			print (m.MoveWest(roomArray2d));
+			textfield.text += "\r\n" + m.MoveWest(roomArray2d);
 		} else if (Input.GetKeyDown (KeyCode.LeftArrow)) {
-			print (m.MoveEast(roomArray2d));
+			textfield.text = "\r\n" + m.MoveEast(roomArray2d);
 		} else if (Input.GetKeyDown (KeyCode.I)) {
-			print ("The rooms contains: " + (roomArray2d [x,y].Items [0].Name));
+			textfield.text += "\r\n" + "The rooms contains: " + (roomArray2d [x,y].Items [0].Name);
 		} else if (Input.GetKeyDown (KeyCode.Space)) {
 			roomArray2d = m.MoveToNextFloor ();
-			print (m.MoveSouth (roomArray2d));
+			textfield.text += "\r\n" + m.MoveSouth (roomArray2d);
 		} else if (Input.GetKeyDown(KeyCode.A)){
-			print (ce.Attack (roomArray2d,x,y));	
+			textfield.text += "\r\n" + ce.Attack (roomArray2d,x,y);	
 		}
 
 
