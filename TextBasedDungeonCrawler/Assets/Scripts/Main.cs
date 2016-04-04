@@ -5,12 +5,17 @@ using UnityEngine.UI;
 public class Main : MonoBehaviour {
 
 	private Movement m;
-	public Text textfield;
-	public Text playerInfo;
+	public Text roomDescriptionText;
+	public Text movementText;
+	public Text combatText;
+	public Text lootText;
+	public Text health;
+	public Text mana;
 	private Player p;
 	private Room[,] roomArray2d;
 	private CombatEngine ce;
 	private Floor f;
+	private Room r;
 
 	void Start () {
 		f = ScriptableObject.CreateInstance<Floor> ();
@@ -23,29 +28,40 @@ public class Main : MonoBehaviour {
 
 		roomArray2d = f.Floor1 ();
 
-		textfield.text += m.getCurrentRoom (roomArray2d).Description + "\r\n" + m.Options(m.getCurrentRoom(roomArray2d));
+		roomDescriptionText.text = m.getCurrentRoom (roomArray2d).Description;
+		movementText.text = m.Options (m.getCurrentRoom(roomArray2d));
 	}
 
 	void Update()
 	{
-		playerInfo.text = "Health:\t" + p.currentHealth;
+		health.text = "Health:\t" + p.currentHealth;
+		mana.text = "Mana:\t" + p.currentMana;
 
 		if (Input.GetKeyDown (KeyCode.DownArrow)) {
-			textfield.text += "\r\n" + m.MoveSouth(roomArray2d);
+			r = m.MoveSouth (roomArray2d);
+			movementText.text = m.Options (r);
+			roomDescriptionText.text = r.Description;
 		} else if (Input.GetKeyDown (KeyCode.UpArrow)) {
-			textfield.text += "\r\n" + m.MoveNorth(roomArray2d);
+			r = m.MoveNorth (roomArray2d);
+			movementText.text = m.Options (r);
+			roomDescriptionText.text = r.Description;
 		} else if (Input.GetKeyDown (KeyCode.RightArrow)) {
-			textfield.text += "\r\n" + m.MoveEast(roomArray2d);
+			r = m.MoveEast (roomArray2d);
+			movementText.text = m.Options (r);
+			roomDescriptionText.text = r.Description;
 		} else if (Input.GetKeyDown (KeyCode.LeftArrow)) {
-			textfield.text = "\r\n" + m.MoveWest(roomArray2d);
+			r = m.MoveWest (roomArray2d);
+			movementText.text = m.Options (r);
+			roomDescriptionText.text = r.Description;
 		} else if (Input.GetKeyDown (KeyCode.I)) {
-			textfield.text += "\r\n" + "The rooms contains: " + (m.getCurrentRoom(roomArray2d).Items[0].Name);
+			lootText.text = "The rooms contains: " + (m.getCurrentRoom(roomArray2d).Items[0].Name);
 		} else if (Input.GetKeyDown (KeyCode.Space) && m.getCurrentRoom(roomArray2d).EntranceToNextFloor == true) {
 			roomArray2d = f.Floor2();
-			textfield.text = "";
-			textfield.text += "\r\n" + m.MoveSouth (roomArray2d);
+			r = m.MoveSouth (roomArray2d);
+			movementText.text = m.Options (r);
+			roomDescriptionText.text = r.Description;
 		} else if (Input.GetKeyDown(KeyCode.A)){
-			textfield.text += "\r\n" + ce.Attack (roomArray2d,m.xCoordinate,m.yCoordinate);	
+			combatText.text = ce.Attack (roomArray2d,m.xCoordinate,m.yCoordinate);	
 		}
 	}
 }
