@@ -1,31 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
-using UnityEngine.UI;
 
-public class Floor : MonoBehaviour {
+public class Floor : ScriptableObject {
 
-	private Movement m;
-	public Text textfield;
-	private Player p;
 	// Temporary for testing.
 	private Monster mon;
 	private Room[,] roomArray2d;
-	private CombatEngine ce;
-	private int x = 0; 
-	private int y = 0;
 
-
-	void Start () {
-		p = ScriptableObject.CreateInstance<Player> ();
-		p.InitTestPlayer();
+	public Room[,] Floor1(){
 
 		// Temporary for testing.
 		mon = ScriptableObject.CreateInstance<Monster>();
 		mon.InitTestMonster ();
-
-		m = ScriptableObject.CreateInstance<Movement>();
-
-		ce = ScriptableObject.CreateInstance<CombatEngine> ();
 
 		Direction north = ScriptableObject.CreateInstance<Direction> ();
 		north.DirectionName = "North";
@@ -74,31 +60,44 @@ public class Floor : MonoBehaviour {
 		roomArray2d [2, 0] = r4;
 		roomArray2d [3, 0] = r5;
 
-		textfield.text += roomArray2d[0, 0].Description + "\r\n" + m.Options(roomArray2d[0,0]);
-
+		return roomArray2d;
 	}
 
-	void Update()
+
+	public Room[,] Floor2 ()
 	{
-		if (Input.GetKeyDown (KeyCode.DownArrow)) {
-			textfield.text += "\r\n" + m.MoveSouth(roomArray2d);
-		} else if (Input.GetKeyDown (KeyCode.UpArrow)) {
-			textfield.text += "\r\n" + m.MoveNorth(roomArray2d);
-		} else if (Input.GetKeyDown (KeyCode.RightArrow)) {
-			textfield.text += "\r\n" + m.MoveWest(roomArray2d);
-		} else if (Input.GetKeyDown (KeyCode.LeftArrow)) {
-			textfield.text = "\r\n" + m.MoveEast(roomArray2d);
-		} else if (Input.GetKeyDown (KeyCode.I)) {
-			textfield.text += "\r\n" + "The rooms contains: " + (roomArray2d [x,y].Items [0].Name);
-		} else if (Input.GetKeyDown (KeyCode.Space)) {
-			roomArray2d = m.MoveToNextFloor ();
-			textfield.text += "\r\n" + m.MoveSouth (roomArray2d);
-		} else if (Input.GetKeyDown(KeyCode.A)){
-			textfield.text += "\r\n" + ce.Attack (roomArray2d,x,y);	
-		}
+		Movement m = ScriptableObject.CreateInstance<Movement> ();
+		m.xCoordinate = -1;
+		m.yCoordinate = 0;
 
+		Room r1 = ScriptableObject.CreateInstance<Room>();
+		r1.Description = "A Round Room with a Broken Chandelier in the Middle of the Room";
 
+		Room r2 = ScriptableObject.CreateInstance<Room>();
+		r2.Description = "A small Room with Broken Funiture in the Corners";
+
+		Room r3 = ScriptableObject.CreateInstance<Room>();
+		r3.Description = "A room with where most of the celling is carved in";
+
+		Room r4 = ScriptableObject.CreateInstance<Room>();
+		r4.Description = "A bigger room with armors along the South Wall, most are missing pieces";
+
+		Room r5 = ScriptableObject.CreateInstance<Room>();
+		r5.Description = "A Medium Sized Room with Empty Frames";
+
+		Room r6 = ScriptableObject.CreateInstance<Room>();
+		r6.Description = "A Hallway with stairs leading further down";
+		r5.EntranceToNextFloor = true;
+
+		Room[,] roomArray2d = new Room[3, 3];
+
+		roomArray2d [0, 0] = r1;
+		roomArray2d [0, 1] = r2;
+		roomArray2d [1, 0] = r3;
+		roomArray2d [1, 1] = r4;
+		roomArray2d [1, 2] = r5;
+		roomArray2d [2, 2] = r6;
+
+		return roomArray2d;
 	}
-
 }
-	
