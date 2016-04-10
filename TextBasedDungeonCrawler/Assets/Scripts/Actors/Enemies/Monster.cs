@@ -18,6 +18,8 @@ public class Monster : Enemy {
 		currentHealth = 30;
 		maxMana = 30;
 		currentMana = 30;
+		strength = 4;
+		defense = 2;
 	}
 	
 }

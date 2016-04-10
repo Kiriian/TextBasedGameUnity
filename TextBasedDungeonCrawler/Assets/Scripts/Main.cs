@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.UI;
 
 public class Main : MonoBehaviour {
@@ -54,14 +55,26 @@ public class Main : MonoBehaviour {
 			movementText.text = m.Options (r);
 			roomDescriptionText.text = r.Description;
 		} else if (Input.GetKeyDown (KeyCode.I)) {
-			lootText.text = "The rooms contains: " + (m.getCurrentRoom(roomArray2d).Items[0].Name);
+			if (m.getCurrentRoom(roomArray2d).Items.Count == 0) {
+				lootText.text = "The room is empty.";
+			} else {
+				lootText.text = "The rooms contains: " + (m.getCurrentRoom(roomArray2d).Items[0].Name);
+			}
+
 		} else if (Input.GetKeyDown (KeyCode.Space) && m.getCurrentRoom(roomArray2d).EntranceToNextFloor == true) {
 			roomArray2d = f.Floor2();
 			r = m.MoveSouth (roomArray2d);
 			movementText.text = m.Options (r);
 			roomDescriptionText.text = r.Description;
 		} else if (Input.GetKeyDown(KeyCode.A)){
-			combatText.text = ce.Attack (roomArray2d,m.xCoordinate,m.yCoordinate);	
+			combatText.text = ce.Attack (p,roomArray2d,m.xCoordinate,m.yCoordinate);	
+		} else if (Input.GetKeyDown(KeyCode.P)) {
+			p.addItem (m.getCurrentRoom (roomArray2d).Items [0]);
+			lootText.text = "You pick up the " + (m.getCurrentRoom(roomArray2d).Items[0].Name);
+			m.getCurrentRoom (roomArray2d).Items.RemoveAt (0);
+		} else if (Input.GetKeyDown(KeyCode.M)) {
+			string items = p.GiveHeldItems();
+			lootText.text = items;
 		}
 	}
 }

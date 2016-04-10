@@ -4,8 +4,8 @@ using System.Collections.Generic;
 
 public class Enemy : Actor {
 
-	private ICollection<Item> lootTable;
-	private ICollection<Item> heldLoot;
+	private ICollection<Item> lootTable = new List<Item>();
+	private ICollection<Item> heldLoot = new List<Item>();
 
 	public ICollection<Item> LootTable {
 		get {

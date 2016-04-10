@@ -9,19 +9,19 @@ public class Actor : ScriptableObject {
 	public int currentHealth;
 	public int maxMana;
 	public int currentMana;
-	private ICollection<StatusEffect> statEffects;
-	private ICollection<Skill> skills;
+	public int strength;
+	public int defense;
+	private ICollection<StatusEffect> statEffects = new List<StatusEffect>();
+	private ICollection<Skill> skills = new List<Skill>();
 	
 
 	/// <summary>
 	/// Hurts the actor by the provided amount. Will check if the actor dies as a result.
 	/// </summary>
 	/// <param name="i">The index.</param>
-	public void hurt(int i){
+	public int hurt(int i){
 		currentHealth = currentHealth - i;
-		if (currentHealth <= 0){
-			// Implement method for killing an actor here.
-		}
+		return i;
 	}
 		
 	/// <summary>

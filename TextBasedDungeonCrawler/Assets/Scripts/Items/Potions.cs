@@ -4,13 +4,15 @@ using System.Collections;
 public class Potions : Consumable {
 
 
-
 }
 	
 public class HealingPotion : Potions {
 
-	// Implement method that, when run, increases player's current HP towards a set limit.
 
+	public string drink(Player p){
+		p.heal (15);
+		return "You drink a health potion. You restore 15 health.";
+	}
 
 }
 

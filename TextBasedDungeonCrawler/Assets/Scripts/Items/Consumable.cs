@@ -5,5 +5,8 @@ public class Consumable : Item {
 
 	// Subclass of Item, meaning it has the Name field as well.
 
+	public void consume(){
+		
+	}
 
 }

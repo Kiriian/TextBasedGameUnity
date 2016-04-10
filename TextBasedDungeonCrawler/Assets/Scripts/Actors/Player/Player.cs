@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class Player : Actor {
 
 
-	private ICollection<Item> items;
+	private ICollection<Item> items = new List<Item>();
 	private PlayerEquipment equipment;
 
 	public Player (string actorName, int maxHealth, int maxMana)
@@ -30,17 +30,29 @@ public class Player : Actor {
 		currentHealth = 30;
 		maxMana = 30;
 		currentMana = 30;
+		strength = 5;
+		defense = 3;
+		equipment = ScriptableObject.CreateInstance<PlayerEquipment> ();
+
+		Equipment testSword = ScriptableObject.CreateInstance<Equipment>();
+		testSword.setAttributes ("Test Sword", "weapon", 2, 0, 0, 0, null);
+		equipment.equip (this,testSword);
+
 	}
 
 	/// <summary>
-	/// Returns all of the items the player is currently holding.
+	/// Returns a string detailing all of the items that the player is carrying.
 	/// </summary>
 	/// <value>The give all held items.</value>
-	public ICollection<Item> GiveAllHeldItems {
-		get {
-			return this.items;
+	public string GiveHeldItems() {
+		string lootString = "You are currently carrying: ";
+		foreach (var item in items) {
+			lootString = lootString + item.Name + ", ";
 		}
+		lootString = lootString.Substring (0, lootString.Length - 2);
+		return lootString;
 	}
+
 
 	/// <summary>
 	/// Returns an object containing the entirety of the player's currently-equipped gear.
@@ -66,13 +78,15 @@ public class Player : Actor {
 	/// <returns>The equipment that has been replaced.</returns>
 	/// <param name="eq">Eq.</param>
 	public Equipment addEquipment(Equipment eq){
-		return equipment.equip (eq);
+		return equipment.equip (this,eq);
 	}
+
+
 	
 
 }
 
-public class PlayerEquipment {
+public class PlayerEquipment : ScriptableObject {
 
 	Equipment equippedHead;
 	Equipment equippedChest;
@@ -82,41 +96,85 @@ public class PlayerEquipment {
 	Equipment equippedWeapon;
 
 	// Equip a new piece of gear. Will return the piece of gear that is replaced.
-	public Equipment equip(Equipment equipment){
+	public Equipment equip(Player player, Equipment equipment){
 
 		// Used for taking the equipment that's currently worn, so that it can be returned and left on the floor after putting on the new piece of equipment.
-		Equipment swappedEquip = null;
-
-		// When player stat changes are implemented, insert a method call that updates the player's stats in accordance with the change in equipment.
+		Equipment swappedEquip = ScriptableObject.CreateInstance<Equipment>();
+		swappedEquip = null;
+		Equipment nullEquip = ScriptableObject.CreateInstance<Equipment>();
 
 		switch (equipment.equipType)
 		{
 
 		case "head":
-			swappedEquip = equippedHead;
-			equippedHead = equipment;
+			if (swappedEquip==null){
+				swappedEquip = nullEquip;
+				equippedHead = equipment;
+			} else {
+				swappedEquip = equippedHead;
+				equippedHead = equipment;
+			}
 			break;
 		case "chest":
-			swappedEquip = equippedChest;
-			equippedChest = equipment;
+			if (swappedEquip==null){
+				swappedEquip = nullEquip;
+				equippedChest = equipment;
+			} else {
+				swappedEquip = equippedChest;
+				equippedChest = equipment;
+			}
 			break;
 		case "gloves":
-			swappedEquip = equippedGloves;
-			equippedGloves = equipment;
+			if (swappedEquip==null){
+				swappedEquip = nullEquip;
+				equippedGloves = equipment;
+			} else {
+				swappedEquip = equippedGloves;
+				equippedGloves = equipment;
+			}
 			break;
 		case "pants":
-			swappedEquip = equippedPants;
-			equippedPants = equipment;
+			if (swappedEquip==null){
+				swappedEquip = nullEquip;
+				equippedPants = equipment;
+			} else {
+				swappedEquip = equippedPants;
+				equippedPants = equipment;
+			}
 			break;
 		case "boots":
-			swappedEquip = equippedBoots;
-			equippedBoots = equipment;
+			if (swappedEquip==null){
+				swappedEquip = nullEquip;
+				equippedBoots = equipment;
+			} else {
+				swappedEquip = equippedBoots;
+				equippedBoots = equipment;
+			}
 			break;
 		case "weapon":
-			swappedEquip = equippedWeapon;
-			equippedWeapon = equipment;
+			if (swappedEquip==null){
+				swappedEquip = nullEquip;
+				equippedWeapon = equipment;
+			} else {
+				swappedEquip = equippedWeapon;
+				equippedWeapon = equipment;
+			}
 			break;
 		}
+		updateStats (player, equipment, swappedEquip);
 		return swappedEquip;
 	}
+
+	public void updateStats(Player p, Equipment newEquip, Equipment oldEquip){
+		p.strength -= oldEquip.strengthMod;
+		p.defense -= oldEquip.defenseMod;
+		p.maxHealth -= oldEquip.healthMod;
+		p.maxMana -= oldEquip.manaMod;
+
+		p.strength += newEquip.strengthMod;
+		p.defense += newEquip.defenseMod;
+		p.maxHealth += newEquip.healthMod;
+		p.maxMana += newEquip.manaMod;
+	}
+
 }

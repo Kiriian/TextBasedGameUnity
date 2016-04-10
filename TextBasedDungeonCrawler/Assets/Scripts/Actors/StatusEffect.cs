@@ -5,8 +5,6 @@ public class StatusEffect : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-	
-		Player ac = new Player ();
 
 
 	}
