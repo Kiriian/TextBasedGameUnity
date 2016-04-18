@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class Main : MonoBehaviour {
 
 	private Movement m;
+	public Text playerName;
 	public Text roomDescriptionText;
 	public Text movementText;
 	public Text combatText;
@@ -28,9 +29,12 @@ public class Main : MonoBehaviour {
 		ce = ScriptableObject.CreateInstance<CombatEngine> ();
 
 		roomArray2d = f.Floor1 ();
+		r = m.getCurrentRoom (roomArray2d);
 
 		roomDescriptionText.text = m.getCurrentRoom (roomArray2d).Description;
 		movementText.text = m.Options (m.getCurrentRoom(roomArray2d));
+		combatText.text = r.checkForMonster(r);
+		playerName.text = p.actorName;
 	}
 
 	void Update()
@@ -42,31 +46,40 @@ public class Main : MonoBehaviour {
 			r = m.MoveSouth (roomArray2d);
 			movementText.text = m.Options (r);
 			roomDescriptionText.text = r.Description;
+			combatText.text = r.checkForMonster (r);
 		} else if (Input.GetKeyDown (KeyCode.UpArrow)) {
 			r = m.MoveNorth (roomArray2d);
 			movementText.text = m.Options (r);
 			roomDescriptionText.text = r.Description;
+			combatText.text = r.checkForMonster (r);
 		} else if (Input.GetKeyDown (KeyCode.RightArrow)) {
 			r = m.MoveEast (roomArray2d);
 			movementText.text = m.Options (r);
 			roomDescriptionText.text = r.Description;
+			combatText.text = r.checkForMonster (r);
 		} else if (Input.GetKeyDown (KeyCode.LeftArrow)) {
 			r = m.MoveWest (roomArray2d);
 			movementText.text = m.Options (r);
 			roomDescriptionText.text = r.Description;
+			combatText.text = r.checkForMonster (r);
 		} else if (Input.GetKeyDown (KeyCode.I)) {
+<<<<<<< HEAD
 			if (m.getCurrentRoom(roomArray2d).Items.Count == 0) {
 				lootText.text = "The room is empty.";
 			} else {
 				lootText.text = "The rooms contains: " + (m.getCurrentRoom(roomArray2d).Items[0].Name);
 			}
 
+=======
+			lootText.text = "In the room you find: " + (m.getCurrentRoom(roomArray2d).Items[0].Name);
+>>>>>>> ....
 		} else if (Input.GetKeyDown (KeyCode.Space) && m.getCurrentRoom(roomArray2d).EntranceToNextFloor == true) {
-			roomArray2d = f.Floor2();
-			r = m.MoveSouth (roomArray2d);
-			movementText.text = m.Options (r);
+			roomArray2d = f.Floor2 (m);
+			r = m.MoveNorth (roomArray2d);
 			roomDescriptionText.text = r.Description;
+			movementText.text = m.Options (r);
 		} else if (Input.GetKeyDown(KeyCode.A)){
+<<<<<<< HEAD
 			combatText.text = ce.Attack (p,roomArray2d,m.xCoordinate,m.yCoordinate);	
 		} else if (Input.GetKeyDown(KeyCode.P)) {
 			p.addItem (m.getCurrentRoom (roomArray2d).Items [0]);
@@ -75,7 +88,15 @@ public class Main : MonoBehaviour {
 		} else if (Input.GetKeyDown(KeyCode.M)) {
 			string items = p.GiveHeldItems();
 			lootText.text = items;
+=======
+			combatText.text = ce.Attack (roomArray2d,m.xCoordinate,m.yCoordinate);	
+		} else if (Input.GetKeyDown(KeyCode.D)){
+			combatText.text = ce.Dodge (roomArray2d,m.xCoordinate,m.yCoordinate);	
+>>>>>>> ....
 		}
 	}
+
+
+
 }
 	

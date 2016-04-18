@@ -5,13 +5,13 @@ using System.Collections.Generic;
 public class Room : ScriptableObject{
 
 	private string description;
-	private bool bossRoom;
 	private bool loot;
 	private bool entranceToPreviousFloor;
 	private bool entranceToNextFloor;
 	private List<Item> items = new List<Item>();
 	private List<Direction> directions = new List<Direction>();
 	private Monster roomMonster;
+	private Boss roomBoss;
 
 	public Monster RoomMonster {
 		get {
@@ -19,6 +19,15 @@ public class Room : ScriptableObject{
 		}
 		set {
 			roomMonster = value;
+		}
+	}
+
+	public Boss RoomBoss {
+		get {
+			return this.roomBoss;
+		}
+		set {
+			roomBoss = value;
 		}
 	}
 
@@ -30,12 +39,6 @@ public class Room : ScriptableObject{
 	{
 		get { return this.description; }
 		set { this.description = value; }
-	}
-
-	public bool BossRoom
-	{
-		get { return this.bossRoom; }
-		set { this.bossRoom = value; }
 	}
 
 	public bool Loot
@@ -66,5 +69,13 @@ public class Room : ScriptableObject{
 
 		get { return this.items; }
 
+	}
+
+	public string checkForMonster(Room r)
+	{
+		if (r.RoomBoss != null || r.RoomMonster != null) {
+			return "\r\n Room contains a Monster";
+		}
+		return null;
 	}
 }

@@ -5,6 +5,7 @@ public class Floor : ScriptableObject {
 
 	// Temporary for testing.
 	private Monster mon;
+	private Boss boss;
 	private Room[,] roomArray2d;
 
 	public Room[,] Floor1(){
@@ -12,6 +13,9 @@ public class Floor : ScriptableObject {
 		// Temporary for testing.
 		mon = ScriptableObject.CreateInstance<Monster>();
 		mon.InitTestMonster ();
+
+		boss = ScriptableObject.CreateInstance<Boss>();
+		boss.InitTestBoss ();
 
 		Direction north = ScriptableObject.CreateInstance<Direction> ();
 		north.DirectionName = "North";
@@ -46,11 +50,11 @@ public class Floor : ScriptableObject {
 		r4.Directions.Add (north);
 		r4.Directions.Add (south);
 
-
 		Room r5 =  ScriptableObject.CreateInstance<Room>();
 		r5.Description = "A Big Room with a Giant Golem in the Middle";
 		r5.EntranceToNextFloor = true;
 		r5.Directions.Add (north);
+		r5.RoomBoss = boss;
 
 		roomArray2d = new Room[4, 2];
 
@@ -64,30 +68,49 @@ public class Floor : ScriptableObject {
 	}
 
 
-	public Room[,] Floor2 ()
+	public Room[,] Floor2 (Movement m)
 	{
-		Movement m = ScriptableObject.CreateInstance<Movement> ();
-		m.xCoordinate = -1;
-		m.yCoordinate = 0;
+		m.xCoordinate = 0;
+		m.yCoordinate = 1;
+
+		Direction north = ScriptableObject.CreateInstance<Direction> ();
+		north.DirectionName = "North";
+		Direction south = ScriptableObject.CreateInstance<Direction> ();
+		south.DirectionName = "South";
+		Direction west = ScriptableObject.CreateInstance<Direction> ();
+		west.DirectionName = "West";
+		Direction east = ScriptableObject.CreateInstance<Direction> ();
+		east.DirectionName = "East";
 
 		Room r1 = ScriptableObject.CreateInstance<Room>();
 		r1.Description = "A Round Room with a Broken Chandelier in the Middle of the Room";
+		r1.Directions.Add (south);
+		r1.Directions.Add (east);
 
 		Room r2 = ScriptableObject.CreateInstance<Room>();
 		r2.Description = "A small Room with Broken Funiture in the Corners";
+		r2.Directions.Add (west);
+		r2.Directions.Add (south);
 
 		Room r3 = ScriptableObject.CreateInstance<Room>();
 		r3.Description = "A room with where most of the celling is carved in";
+		r3.Directions.Add (north);
+		r3.Directions.Add (east);
 
 		Room r4 = ScriptableObject.CreateInstance<Room>();
 		r4.Description = "A bigger room with armors along the South Wall, most are missing pieces";
+		r4.Directions.Add (west);
+		r4.Directions.Add (east);
 
 		Room r5 = ScriptableObject.CreateInstance<Room>();
 		r5.Description = "A Medium Sized Room with Empty Frames";
+		r5.Directions.Add (south);
+		r5.Directions.Add (west);
 
 		Room r6 = ScriptableObject.CreateInstance<Room>();
 		r6.Description = "A Hallway with stairs leading further down";
-		r5.EntranceToNextFloor = true;
+		r6.Directions.Add (north);
+		r6.EntranceToNextFloor = true;
 
 		Room[,] roomArray2d = new Room[3, 3];
 
