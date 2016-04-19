@@ -13,10 +13,13 @@ public class Boss : Enemy {
 
 	public void InitTestBoss(){
 		actorName = "TestBoss";
-		maxHealth = 130;
-		currentHealth = 130;
+		maxHealth = 50;
+		currentHealth = 50;
 		maxMana = 50;
 		currentMana = 50;
+		chanceToHit = 8;
+		strength = 7;
+		defense = 5;
 	}
 
 }

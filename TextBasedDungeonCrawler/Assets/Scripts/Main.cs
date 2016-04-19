@@ -13,6 +13,8 @@ public class Main : MonoBehaviour {
 	public Text lootText;
 	public Text health;
 	public Text mana;
+	public Text strength;
+	public Text defense;
 	private Player p;
 	private Room[,] roomArray2d;
 	private CombatEngine ce;
@@ -41,6 +43,8 @@ public class Main : MonoBehaviour {
 	{
 		health.text = "Health:\t" + p.currentHealth;
 		mana.text = "Mana:\t" + p.currentMana;
+		defense.text = "Defense:\t" + p.defense;
+		strength.text = "Strength:\t" + p.strength;
 
 		if (Input.GetKeyDown (KeyCode.DownArrow)) {
 			r = m.MoveSouth (roomArray2d);
@@ -63,23 +67,18 @@ public class Main : MonoBehaviour {
 			roomDescriptionText.text = r.Description;
 			combatText.text = r.checkForMonster (r);
 		} else if (Input.GetKeyDown (KeyCode.I)) {
-<<<<<<< HEAD
 			if (m.getCurrentRoom(roomArray2d).Items.Count == 0) {
 				lootText.text = "The room is empty.";
 			} else {
 				lootText.text = "The rooms contains: " + (m.getCurrentRoom(roomArray2d).Items[0].Name);
 			}
-
-=======
 			lootText.text = "In the room you find: " + (m.getCurrentRoom(roomArray2d).Items[0].Name);
->>>>>>> ....
 		} else if (Input.GetKeyDown (KeyCode.Space) && m.getCurrentRoom(roomArray2d).EntranceToNextFloor == true) {
 			roomArray2d = f.Floor2 (m);
 			r = m.MoveNorth (roomArray2d);
 			roomDescriptionText.text = r.Description;
 			movementText.text = m.Options (r);
 		} else if (Input.GetKeyDown(KeyCode.A)){
-<<<<<<< HEAD
 			combatText.text = ce.Attack (p,roomArray2d,m.xCoordinate,m.yCoordinate);	
 		} else if (Input.GetKeyDown(KeyCode.P)) {
 			p.addItem (m.getCurrentRoom (roomArray2d).Items [0]);
@@ -88,11 +87,9 @@ public class Main : MonoBehaviour {
 		} else if (Input.GetKeyDown(KeyCode.M)) {
 			string items = p.GiveHeldItems();
 			lootText.text = items;
-=======
-			combatText.text = ce.Attack (roomArray2d,m.xCoordinate,m.yCoordinate);	
+			combatText.text = ce.Attack (p, roomArray2d,m.xCoordinate,m.yCoordinate);	
 		} else if (Input.GetKeyDown(KeyCode.D)){
-			combatText.text = ce.Dodge (roomArray2d,m.xCoordinate,m.yCoordinate);	
->>>>>>> ....
+			combatText.text = ce.Dodge (p, roomArray2d, m.xCoordinate, m.yCoordinate);
 		}
 	}
 

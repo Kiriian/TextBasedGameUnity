@@ -11,6 +11,8 @@ public class Actor : ScriptableObject {
 	public int currentMana;
 	public int strength;
 	public int defense;
+	public int chanceToDodge;
+	public int chanceToHit;
 	private ICollection<StatusEffect> statEffects = new List<StatusEffect>();
 	private ICollection<Skill> skills = new List<Skill>();
 	

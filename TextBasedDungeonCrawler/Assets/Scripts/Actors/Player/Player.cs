@@ -32,6 +32,8 @@ public class Player : Actor {
 		currentMana = 30;
 		strength = 5;
 		defense = 3;
+		chanceToDodge = 5;
+		chanceToHit = 5;
 		equipment = ScriptableObject.CreateInstance<PlayerEquipment> ();
 
 		Equipment testSword = ScriptableObject.CreateInstance<Equipment>();

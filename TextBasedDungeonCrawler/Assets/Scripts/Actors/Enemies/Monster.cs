@@ -20,6 +20,7 @@ public class Monster : Enemy {
 		currentMana = 30;
 		strength = 4;
 		defense = 2;
+		chanceToHit = 5;
 	}
 	
 }

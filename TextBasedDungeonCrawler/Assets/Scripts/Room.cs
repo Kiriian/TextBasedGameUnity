@@ -73,8 +73,11 @@ public class Room : ScriptableObject{
 
 	public string checkForMonster(Room r)
 	{
-		if (r.RoomBoss != null || r.RoomMonster != null) {
-			return "\r\n Room contains a Monster";
+		if (r.RoomBoss != null ) {
+			return "Room contains a " + r.roomBoss.actorName;
+		}
+		else if (r.roomMonster != null ) {
+			return "Room contains a " + r.roomMonster.actorName;
 		}
 		return null;
 	}
