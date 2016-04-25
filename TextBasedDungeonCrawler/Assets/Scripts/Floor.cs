@@ -64,6 +64,10 @@ public class Floor : ScriptableObject {
 		roomArray2d [2, 0] = r4;
 		roomArray2d [3, 0] = r5;
 
+
+		//FloorGenerator fg = ScriptableObject.CreateInstance<FloorGenerator> ();
+		//roomArray2d = fg.GenerateFloor ();
+
 		return roomArray2d;
 	}
 
