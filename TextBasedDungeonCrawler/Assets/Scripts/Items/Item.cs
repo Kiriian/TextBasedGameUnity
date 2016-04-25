@@ -11,8 +11,8 @@ public class Item : ScriptableObject {
 		
 	}
 
-	public Item (string name, int carryLimit, int heldQuantity) {
-		this.name = name;
+	public Item (string itemName, int carryLimit, int heldQuantity) {
+		this.itemName = itemName;
 		this.carryLimit = carryLimit;
 		this.heldQuantity = heldQuantity;
 	}

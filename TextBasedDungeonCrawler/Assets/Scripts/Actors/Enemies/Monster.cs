@@ -21,6 +21,7 @@ public class Monster : Enemy {
 		strength = 4;
 		defense = 2;
 		chanceToHit = 5;
+
 	}
 	
 }

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
 public class Player : Actor {
 
@@ -72,6 +73,23 @@ public class Player : Actor {
 	/// <param name="i">The index.</param>
 	public void addItem(Item i){
 		items.Add (i);
+	}
+
+	/// <summary>
+	/// Removes an item from the player's inventory.
+	/// </summary>
+	/// <param name="i">The index.</param>
+	public void removeItem(Item i){
+		items.Remove (i);
+	}
+
+	public HealingPotion getHealingPotion(){
+		HealingPotion pot = ScriptableObject.CreateInstance<HealingPotion>();
+		if (items.Contains(pot)){
+			return pot;
+		} else {
+			return null;
+		}
 	}
 
 	/// <summary>

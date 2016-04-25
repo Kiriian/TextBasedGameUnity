@@ -67,29 +67,40 @@ public class Main : MonoBehaviour {
 			roomDescriptionText.text = r.Description;
 			combatText.text = r.checkForMonster (r);
 		} else if (Input.GetKeyDown (KeyCode.I)) {
-			if (m.getCurrentRoom(roomArray2d).Items.Count == 0) {
+			if (m.getCurrentRoom (roomArray2d).Items.Count == 0) {
 				lootText.text = "The room is empty.";
 			} else {
-				lootText.text = "The rooms contains: " + (m.getCurrentRoom(roomArray2d).Items[0].Name);
+				lootText.text = "The rooms contains: " + (m.getCurrentRoom (roomArray2d).Items [0].Name);
 			}
-			lootText.text = "In the room you find: " + (m.getCurrentRoom(roomArray2d).Items[0].Name);
-		} else if (Input.GetKeyDown (KeyCode.Space) && m.getCurrentRoom(roomArray2d).EntranceToNextFloor == true) {
+		} else if (Input.GetKeyDown (KeyCode.Space) && m.getCurrentRoom (roomArray2d).EntranceToNextFloor == true) {
 			roomArray2d = f.Floor2 (m);
 			r = m.MoveNorth (roomArray2d);
 			roomDescriptionText.text = r.Description;
 			movementText.text = m.Options (r);
-		} else if (Input.GetKeyDown(KeyCode.A)){
-			combatText.text = ce.Attack (p,roomArray2d,m.xCoordinate,m.yCoordinate);	
-		} else if (Input.GetKeyDown(KeyCode.P)) {
-			p.addItem (m.getCurrentRoom (roomArray2d).Items [0]);
-			lootText.text = "You pick up the " + (m.getCurrentRoom(roomArray2d).Items[0].Name);
-			m.getCurrentRoom (roomArray2d).Items.RemoveAt (0);
-		} else if (Input.GetKeyDown(KeyCode.M)) {
-			string items = p.GiveHeldItems();
+		} else if (Input.GetKeyDown (KeyCode.A)) {
+			combatText.text = ce.Attack (p, roomArray2d, m.xCoordinate, m.yCoordinate);	
+		} else if (Input.GetKeyDown (KeyCode.P)) {
+			if (m.getCurrentRoom (roomArray2d).Items.Count != 0) {
+				p.addItem (m.getCurrentRoom (roomArray2d).Items [0]);
+				lootText.text = "You pick up the " + (m.getCurrentRoom (roomArray2d).Items [0].Name);
+				m.getCurrentRoom (roomArray2d).Items.RemoveAt (0);
+			} else {
+				lootText.text = "There is nothing to pick up";
+			}
+		} else if (Input.GetKeyDown (KeyCode.M)) {
+			string items = p.GiveHeldItems ();
 			lootText.text = items;
-			combatText.text = ce.Attack (p, roomArray2d,m.xCoordinate,m.yCoordinate);	
-		} else if (Input.GetKeyDown(KeyCode.D)){
+		} else if (Input.GetKeyDown (KeyCode.D)) {
 			combatText.text = ce.Dodge (p, roomArray2d, m.xCoordinate, m.yCoordinate);
+		} else if (Input.GetKeyDown (KeyCode.Q)) {
+			HealingPotion pot = p.getHealingPotion();
+			if (pot != null) {
+				lootText.text = pot.drink (p);
+				p.removeItem (pot);
+			} else {
+				lootText.text = "You have no healing potions";
+			}
+
 		}
 	}
 
