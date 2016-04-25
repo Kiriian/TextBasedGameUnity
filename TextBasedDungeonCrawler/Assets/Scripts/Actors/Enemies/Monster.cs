@@ -23,5 +23,50 @@ public class Monster : Enemy {
 		chanceToHit = 5;
 
 	}
-	
+
+	public void InitSpider(){
+		actorName = "Spider";
+		maxHealth = 15;
+		currentHealth = maxHealth;
+		maxMana = 0;
+		currentMana = 0;
+		strength = 2;
+		defense = 1;
+		chanceToHit = 7;
+	}
+
+	public void InitZombie(){
+		actorName = "Zombie";
+		maxHealth = 30;
+		currentHealth = 30;
+		maxMana = 0;
+		currentMana = 0;
+		strength = 4;
+		defense = 4;
+		chanceToHit = 3;
+	}
+
+	public void InitSkeleton(){
+		actorName = "Skeleton";
+		maxHealth = 15;
+		currentHealth = 15;
+		maxMana = 0;
+		currentMana = 0;
+		strength = 4;
+		defense = 1;
+		chanceToHit = 5;
+
+	}
+
+	public void InitBat()
+	{
+		actorName = "Bat";
+		maxHealth = 5;
+		currentHealth = 5;
+		maxMana = 0;
+		currentMana = 0;
+		strength = 4;
+		defense = 1;
+		chanceToHit = 5;
+	}
 }

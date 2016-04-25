@@ -75,7 +75,7 @@ public class Player : Actor {
 		items.Add (i);
 	}
 
-	/// <summary>
+	/// <summary>	
 	/// Removes an item from the player's inventory.
 	/// </summary>
 	/// <param name="i">The index.</param>
@@ -84,12 +84,10 @@ public class Player : Actor {
 	}
 
 	public HealingPotion getHealingPotion(){
-		HealingPotion pot = ScriptableObject.CreateInstance<HealingPotion>();
-		if (items.Contains(pot)){
-			return pot;
-		} else {
-			return null;
+		foreach (HealingPotion pots in items) {
+			return pots;
 		}
+		return null;
 	}
 
 	/// <summary>

@@ -12,7 +12,7 @@ public class Floor : ScriptableObject {
 
 		// Temporary for testing.
 		mon = ScriptableObject.CreateInstance<Monster>();
-		mon.InitTestMonster ();
+		mon.InitSpider ();
 
 		boss = ScriptableObject.CreateInstance<Boss>();
 		boss.InitTestBoss ();

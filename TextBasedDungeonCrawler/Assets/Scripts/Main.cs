@@ -100,7 +100,6 @@ public class Main : MonoBehaviour {
 			} else {
 				lootText.text = "You have no healing potions";
 			}
-
 		}
 	}
 
