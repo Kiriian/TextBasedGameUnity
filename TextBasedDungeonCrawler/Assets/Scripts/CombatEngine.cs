@@ -16,9 +16,9 @@ public class CombatEngine : ScriptableObject {
 				roomArr [x, y].RoomMonster = null;
 				return "You hurt the " + mon.actorName + " for " + monDamage + " damage. It dies.";
 			}
-			if (p.currentHealth<=0) {
-				// Implement a game-over function for this.
-				return "You die.";
+			else if (p.currentHealth<=0) {
+				Application.LoadLevel (0);
+				return "";
 			}
 			return "You hurt the " + mon.actorName + " for " + monDamage + " damage. Its health is now " + mon.currentHealth + ". The " + mon.actorName + " hurts you for " + playerDamage + ".";
 		} if (roomArr[x,y].RoomBoss!=null){
@@ -30,8 +30,8 @@ public class CombatEngine : ScriptableObject {
 				return "You hurt the " + boss.actorName + " for " + bossDamage + " damage. It dies.";
 			}
 			if (p.currentHealth<=0) {
-				// Implement a game-over function for this.
-				return "You die.";
+				Application.LoadLevel (0);
+				return "";
 			}
 			return "You hurt the " + boss.actorName + " for " + bossDamage + " damage. Its health is now " + boss.currentHealth + ". The " + boss.actorName + " hurts you for " + playerDamage + ".";
 		} else {
