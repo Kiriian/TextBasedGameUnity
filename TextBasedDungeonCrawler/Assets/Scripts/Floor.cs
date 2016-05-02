@@ -15,7 +15,7 @@ public class Floor : ScriptableObject {
 		mon.InitSpider ();
 
 		boss = ScriptableObject.CreateInstance<Boss>();
-		boss.InitTestBoss ();
+		boss.Golem ();
 
 		Direction north = ScriptableObject.CreateInstance<Direction> ();
 		north.DirectionName = "North";
