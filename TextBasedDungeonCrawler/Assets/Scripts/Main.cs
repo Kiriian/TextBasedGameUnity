@@ -6,6 +6,13 @@ using UnityEngine.UI;
 public class Main : MonoBehaviour {
 
 	private Movement m;
+	private Player p;
+	private Room[,] roomArray2d;
+	private CombatEngine ce;
+	private Floor f;
+	private Room r;
+	private ButtonClicked bt;
+
 	public Text playerName;
 	public Text roomDescriptionText;
 	public Text movementText;
@@ -15,11 +22,7 @@ public class Main : MonoBehaviour {
 	public Text mana;
 	public Text strength;
 	public Text defense;
-	private Player p;
-	private Room[,] roomArray2d;
-	private CombatEngine ce;
-	private Floor f;
-	private Room r;
+
 
 	void Start () {
 		f = ScriptableObject.CreateInstance<Floor> ();
@@ -32,10 +35,8 @@ public class Main : MonoBehaviour {
 
 		roomArray2d = f.Floor1 ();
 		r = m.getCurrentRoom (roomArray2d);
+		setText (r);
 
-		roomDescriptionText.text = m.getCurrentRoom (roomArray2d).Description;
-		movementText.text = m.Options (m.getCurrentRoom(roomArray2d));
-		combatText.text = r.checkForMonster(r);
 		playerName.text = p.actorName;
 	}
 
@@ -48,62 +49,94 @@ public class Main : MonoBehaviour {
 
 		if (Input.GetKeyDown (KeyCode.DownArrow)) {
 			r = m.MoveSouth (roomArray2d);
-			movementText.text = m.Options (r);
-			roomDescriptionText.text = r.Description;
-			combatText.text = r.checkForMonster (r);
+			setText (r);
 		} else if (Input.GetKeyDown (KeyCode.UpArrow)) {
 			r = m.MoveNorth (roomArray2d);
-			movementText.text = m.Options (r);
-			roomDescriptionText.text = r.Description;
-			combatText.text = r.checkForMonster (r);
+			setText (r);
 		} else if (Input.GetKeyDown (KeyCode.RightArrow)) {
 			r = m.MoveEast (roomArray2d);
-			movementText.text = m.Options (r);
-			roomDescriptionText.text = r.Description;
-			combatText.text = r.checkForMonster (r);
+			setText (r);
 		} else if (Input.GetKeyDown (KeyCode.LeftArrow)) {
 			r = m.MoveWest (roomArray2d);
-			movementText.text = m.Options (r);
-			roomDescriptionText.text = r.Description;
-			combatText.text = r.checkForMonster (r);
+			setText (r);
 		} else if (Input.GetKeyDown (KeyCode.I)) {
-			if (m.getCurrentRoom (roomArray2d).Items.Count == 0) {
-				lootText.text = "The room is empty.";
-			} else {
-				lootText.text = "The rooms contains: " + (m.getCurrentRoom (roomArray2d).Items [0].Name);
-			}
+			setLootText (m, roomArray2d);
 		} else if (Input.GetKeyDown (KeyCode.Space) && m.getCurrentRoom (roomArray2d).EntranceToNextFloor == true) {
 			roomArray2d = f.Floor2 (m);
 			r = m.MoveNorth (roomArray2d);
-			roomDescriptionText.text = r.Description;
-			movementText.text = m.Options (r);
+			setText (r);
 		} else if (Input.GetKeyDown (KeyCode.A)) {
-			combatText.text = ce.Attack (p, roomArray2d, m.xCoordinate, m.yCoordinate);	
+			setAttackCombatText (ce, roomArray2d, p, m);
 		} else if (Input.GetKeyDown (KeyCode.P)) {
-			if (m.getCurrentRoom (roomArray2d).Items.Count != 0) {
-				p.addItem (m.getCurrentRoom (roomArray2d).Items [0]);
-				lootText.text = "You pick up the " + (m.getCurrentRoom (roomArray2d).Items [0].Name);
-				m.getCurrentRoom (roomArray2d).Items.RemoveAt (0);
-			} else {
-				lootText.text = "There is nothing to pick up";
-			}
+			setPickUpLootText (m, p);
 		} else if (Input.GetKeyDown (KeyCode.M)) {
-			string items = p.GiveHeldItems ();
-			lootText.text = items;
+			setInventoryText (p);
 		} else if (Input.GetKeyDown (KeyCode.D)) {
-			combatText.text = ce.Dodge (p, roomArray2d, m.xCoordinate, m.yCoordinate);
+			setDodgeCombatText (ce, roomArray2d, p, m);
 		} else if (Input.GetKeyDown (KeyCode.Q)) {
-			HealingPotion pot = p.getHealingPotion();
-			if (pot != null) {
-				lootText.text = pot.drink (p);
-				p.removeItem (pot);
-			} else {
-				lootText.text = "You have no healing potions";
-			}
+			setUseHealingPotionText (p);
 		}
 	}
 
+	public void ScreenButtonPressed (int buttonID){
+		bt = ScriptableObject.CreateInstance<ButtonClicked> ();
 
+		bt.CheckButtonPressed (roomArray2d, m, this, buttonID, ce, p);
+	
+	}
 
+	public void setText(Room r)
+	{
+		movementText.text = m.Options (r);
+		roomDescriptionText.text = r.Description;
+		combatText.text = r.checkForMonster (r);
+	}
+
+	public void setLootText(Movement m, Room[,] roomArray)
+	{
+		if (m.getCurrentRoom (roomArray).Items.Count == 0) {
+			lootText.text = "The room is empty.";
+		} else {
+			lootText.text = "The rooms contains: " + (m.getCurrentRoom (roomArray).Items [0].Name);
+		}
+	}
+
+	public void setAttackCombatText (CombatEngine ce, Room[,] roomArray, Player p, Movement m)
+	{
+		combatText.text = ce.Attack (p, roomArray, m.xCoordinate, m.yCoordinate);	
+	}
+
+	public void setPickUpLootText(Movement m, Player p)
+	{
+		if (m.getCurrentRoom (roomArray2d).Items.Count != 0) {
+			p.addItem (m.getCurrentRoom (roomArray2d).Items [0]);
+			lootText.text = "You pick up the " + (m.getCurrentRoom (roomArray2d).Items [0].Name);
+			m.getCurrentRoom (roomArray2d).Items.RemoveAt (0);
+		} else {
+			lootText.text = "There is nothing to pick up";
+		}
+	}
+
+	public void setInventoryText (Player p)
+	{
+		string items = p.GiveHeldItems ();
+		lootText.text = items;
+	}
+
+	public void setDodgeCombatText(CombatEngine ce, Room[,] roomArray, Player p, Movement m)
+	{
+		combatText.text = ce.Dodge (p, roomArray2d, m.xCoordinate, m.yCoordinate);
+	}
+
+	public void setUseHealingPotionText(Player p)
+	{
+		HealingPotion pot = p.getHealingPotion();
+		if (pot != null) {
+			lootText.text = pot.drink (p);
+			p.removeItem (pot);
+		} else {
+			lootText.text = "You have no healing potions";
+		}
+	}
 }
 	
