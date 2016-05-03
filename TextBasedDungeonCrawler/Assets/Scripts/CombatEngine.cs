@@ -17,7 +17,7 @@ public class CombatEngine : ScriptableObject {
 				return "You hurt the " + mon.actorName + " for " + monDamage + " damage. It dies.";
 			}
 			else if (p.currentHealth<=0) {
-				Application.LoadLevel (0);
+				Application.LoadLevel (2);
 				return "";
 			}
 			return "You hurt the " + mon.actorName + " for " + monDamage + " damage. Its health is now " + mon.currentHealth + ". The " + mon.actorName + " hurts you for " + playerDamage + ".";
@@ -30,7 +30,7 @@ public class CombatEngine : ScriptableObject {
 				return "You hurt the " + boss.actorName + " for " + bossDamage + " damage. It dies.";
 			}
 			if (p.currentHealth<=0) {
-				Application.LoadLevel (0);
+				Application.LoadLevel (2);
 				return "";
 			}
 			return "You hurt the " + boss.actorName + " for " + bossDamage + " damage. Its health is now " + boss.currentHealth + ". The " + boss.actorName + " hurts you for " + playerDamage + ".";
@@ -48,8 +48,8 @@ public class CombatEngine : ScriptableObject {
 			} else if (mon.chanceToHit > p.chanceToDodge) {
 				int playerDamage = p.hurt (mon.strength - p.defense);
 				if (p.currentHealth<=0) {
-					// Implement a game-over function for this.
-					return "You die.";
+					Application.LoadLevel (2);
+					return "";
 				}
 				return "You tried to dodge, the enemy hurts you for " + playerDamage;
 			} else if (mon.chanceToHit == p.chanceToDodge) {
@@ -59,8 +59,8 @@ public class CombatEngine : ScriptableObject {
 				} else{
 					int playerDamage = p.hurt (mon.strength - p.defense);
 					if (p.currentHealth<=0) {
-						// Implement a game-over function for this.
-						return "You die.";
+						Application.LoadLevel (2);
+						return "";
 					}
 					return "You tried to dodge, the enemy hurts you for " + playerDamage;
 				}
@@ -73,8 +73,8 @@ public class CombatEngine : ScriptableObject {
 			} else if (boss.chanceToHit > p.chanceToDodge) {
 				int playerDamage = p.hurt (boss.strength - p.defense);
 				if (p.currentHealth<=0) {
-					// Implement a game-over function for this.
-					return "You die.";
+					Application.LoadLevel (2);
+					return "";
 				}
 				return "You tried to dodge, the enemy hurts you for " + playerDamage;
 			} else if (boss.chanceToHit == p.chanceToDodge) {
@@ -84,8 +84,8 @@ public class CombatEngine : ScriptableObject {
 				} else{
 					int playerDamage = p.hurt (boss.strength - p.defense);
 					if (p.currentHealth<=0) {
-						// Implement a game-over function for this.
-						return "You die.";
+						Application.LoadLevel (2);
+						return "";
 					}
 					return "You tried to dodge, the enemy hurts you for " + playerDamage;
 				}
