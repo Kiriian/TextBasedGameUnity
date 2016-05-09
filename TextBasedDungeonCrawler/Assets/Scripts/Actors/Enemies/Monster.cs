@@ -33,6 +33,9 @@ public class Monster : Enemy {
 		strength = 2;
 		defense = 1;
 		chanceToHit = 7;
+		droprate = 10;
+		itemRarity = 10;
+
 	}
 
 	public void InitZombie(){
@@ -44,6 +47,8 @@ public class Monster : Enemy {
 		strength = 4;
 		defense = 4;
 		chanceToHit = 3;
+		droprate = 40;
+		itemRarity = 20;
 	}
 
 	public void InitSkeleton(){
@@ -55,7 +60,8 @@ public class Monster : Enemy {
 		strength = 4;
 		defense = 1;
 		chanceToHit = 5;
-
+		droprate = 40;
+		itemRarity = 20;
 	}
 
 	public void InitBat()
@@ -68,5 +74,7 @@ public class Monster : Enemy {
 		strength = 4;
 		defense = 1;
 		chanceToHit = 5;
+		droprate = 10;
+		itemRarity = 10;
 	}
 }

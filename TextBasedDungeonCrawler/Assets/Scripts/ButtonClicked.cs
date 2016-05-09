@@ -9,19 +9,19 @@ public class ButtonClicked : ScriptableObject {
 		switch (id) {
 		case 0:
 			r = m.MoveNorth (roomArray);
-			main.setText (r);
+			main.setMoveText (r);
 			break;
 		case 1:
 			r = m.MoveSouth (roomArray);
-			main.setText (r);
+			main.setMoveText (r);
 			break;
 		case 2:
 			r = m.MoveEast (roomArray);
-			main.setText (r);
+			main.setMoveText (r);
 			break;
 		case 3:
 			r = m.MoveWest (roomArray);
-			main.setText (r);
+			main.setMoveText (r);
 			break;
 		case 4:
 			main.setLootText (m, roomArray);

@@ -6,6 +6,8 @@ public class Enemy : Actor {
 
 	private ICollection<Item> lootTable = new List<Item>();
 	private ICollection<Item> heldLoot = new List<Item>();
+	public int droprate;
+	public int itemRarity;
 
 	public ICollection<Item> LootTable {
 		get {
@@ -41,7 +43,5 @@ public class Enemy : Actor {
 		this.maxMana = maxMana;
 		this.currentMana = maxMana;
 	}
-
-
 
 }

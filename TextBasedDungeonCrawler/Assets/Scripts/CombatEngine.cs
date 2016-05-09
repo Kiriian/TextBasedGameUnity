@@ -54,7 +54,7 @@ public class CombatEngine : ScriptableObject {
 				return "You tried to dodge, the enemy hurts you for " + playerDamage;
 			} else if (mon.chanceToHit == p.chanceToDodge) {
 				int number = UnityEngine.Random.Range (1, 10);
-				if (number >= p.chanceToDodge) {
+				if (number >= 5) {
 					return "You dodge the enemy";
 				} else{
 					int playerDamage = p.hurt (mon.strength - p.defense);
@@ -79,7 +79,7 @@ public class CombatEngine : ScriptableObject {
 				return "You tried to dodge, the enemy hurts you for " + playerDamage;
 			} else if (boss.chanceToHit == p.chanceToDodge) {
 				int number = UnityEngine.Random.Range (1, 10);
-				if (number >= p.chanceToDodge) {
+				if (number >= 5) {
 					return "You dodge the enemy";
 				} else{
 					int playerDamage = p.hurt (boss.strength - p.defense);

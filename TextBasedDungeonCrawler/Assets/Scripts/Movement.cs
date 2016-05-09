@@ -15,9 +15,6 @@ public class Movement : ScriptableObject {
 		x = x + 1;
 
 		if (x <= xAxis && x >= 0 && roomArray [x, y] != null) {
-			if (roomArray [x, y].EntranceToNextFloor == true) {
-				return roomArray [x, y];
-			}
 			return roomArray [x, y];
 		} else {
 			return MoveNorth (roomArray);
@@ -31,9 +28,6 @@ public class Movement : ScriptableObject {
 		x = x - 1;
 
 		if (x <= xAxis && x >= 0 && roomArray [x, y] != null) {
-			if (roomArray [x, y].EntranceToNextFloor == true) {
-				return roomArray [x, y];
-			}
 			return roomArray [x, y];
 		} else {
 			return MoveSouth (roomArray);
@@ -47,9 +41,6 @@ public class Movement : ScriptableObject {
 		y = y + 1;
 
 		if (y <= yAxis && y >= 0 && roomArray [x, y] != null) {
-			if (roomArray [x, y].EntranceToNextFloor == true) {
-				return roomArray [x, y];
-			}
 			return roomArray [x, y];
 		} else {
 			return MoveWest (roomArray);
@@ -62,9 +53,6 @@ public class Movement : ScriptableObject {
 
 		y = y - 1;
 		if (y <= yAxis && y >= 0 && roomArray [x, y] != null) {
-			if (roomArray [x, y].EntranceToNextFloor == true) {
-				return roomArray [x, y];
-			}
 			return roomArray [x, y];
 		} else {
 			return MoveEast (roomArray);

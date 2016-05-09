@@ -35,7 +35,7 @@ public class Main : MonoBehaviour {
 
 		roomArray2d = f.Floor1 ();
 		r = m.getCurrentRoom (roomArray2d);
-		setText (r);
+		setMoveText (r);
 
 		playerName.text = p.actorName;
 	}
@@ -48,23 +48,63 @@ public class Main : MonoBehaviour {
 		strength.text = "Strength:\t" + p.strength;
 
 		if (Input.GetKeyDown (KeyCode.DownArrow)) {
-			r = m.MoveSouth (roomArray2d);
-			setText (r);
+			if (r.checkForMonster == null) {
+				r = m.MoveSouth (roomArray2d);
+				setMoveText (r);
+			} else if (r.checkForMonster != null) {
+				int number = UnityEngine.Random.Range (1, 10);
+				if (number >= 8) {
+					r = m.MoveSouth (roomArray2d);
+					setMoveText (r);
+				} else {
+					EscapeMonster (r);
+				}
+			}
 		} else if (Input.GetKeyDown (KeyCode.UpArrow)) {
-			r = m.MoveNorth (roomArray2d);
-			setText (r);
+			if (r.checkForMonster == null) {
+				r = m.MoveNorth (roomArray2d);
+				setMoveText (r);
+			} else if (r.checkForMonster != null) {
+				int number = UnityEngine.Random.Range (1, 10);
+				if (number >= 8) {
+					r = m.MoveNorth (roomArray2d);
+					setMoveText (r);
+				} else {
+					EscapeMonster (r);
+				}
+			}
 		} else if (Input.GetKeyDown (KeyCode.RightArrow)) {
-			r = m.MoveEast (roomArray2d);
-			setText (r);
+			if (r.checkForMonster == null) {
+				r = m.MoveEast (roomArray2d);
+				setMoveText (r);
+			} else if (r.checkForMonster != null) {
+				int number = UnityEngine.Random.Range (1, 10);
+				if (number >= 8) {
+					r = m.MoveEast (roomArray2d);
+					setMoveText (r);
+				} else {
+					EscapeMonster (r);
+				}
+			}
 		} else if (Input.GetKeyDown (KeyCode.LeftArrow)) {
 			r = m.MoveWest (roomArray2d);
-			setText (r);
+			setMoveText (r);
 		} else if (Input.GetKeyDown (KeyCode.I)) {
 			setLootText (m, roomArray2d);
 		} else if (Input.GetKeyDown (KeyCode.Space) && m.getCurrentRoom (roomArray2d).EntranceToNextFloor == true) {
 			roomArray2d = f.Floor2 (m);
-			r = m.MoveNorth (roomArray2d);
-			setText (r);
+			if (r.checkForMonster == null) {
+				r = m.MoveNorth (roomArray2d);
+				setMoveText (r);
+			} else if (r.checkForMonster != null) {
+				int number = UnityEngine.Random.Range (1, 10);
+				if (number >= 8) {
+					r = m.MoveNorth (roomArray2d);
+					setMoveText (r);
+				} else {
+					EscapeMonster (r);
+				}
+			}
 		} else if (Input.GetKeyDown (KeyCode.A)) {
 			setAttackCombatText (ce, roomArray2d, p, m);
 		} else if (Input.GetKeyDown (KeyCode.P)) {
@@ -85,7 +125,7 @@ public class Main : MonoBehaviour {
 	
 	}
 
-	public void setText(Room r)
+	public void setMoveText(Room r)
 	{
 		movementText.text = m.Options (r);
 		roomDescriptionText.text = r.Description;
@@ -137,6 +177,17 @@ public class Main : MonoBehaviour {
 		} else {
 			lootText.text = "You have no healing potions";
 		}
+	}
+
+	public void EscapeMonster (Room r)
+	{
+		Monster mon = r.RoomMonster;
+		int playerDamage = p.hurt (mon.strength - p.defense);
+		if (p.currentHealth<=0) {
+			Application.LoadLevel (2);
+			return "";
+		}
+		return "You tried to escape, the Monster hurts you for " + playerDamage;
 	}
 }
 	
