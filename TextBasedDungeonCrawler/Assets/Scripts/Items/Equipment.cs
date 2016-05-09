@@ -10,7 +10,6 @@ public class Equipment : Item {
 	public int healthMod;
 	public int manaMod;
 	public StatusEffect activeEffect;
-	public ICollection<Equipment> equipmentTemplates;
 
 	public Equipment ()
 	{
@@ -28,13 +27,6 @@ public class Equipment : Item {
 		this.activeEffect = activeEffect;
 		this.carryLimit = 1;
 		this.heldQuantity = 1;
-	}
-
-
-	public ICollection<Equipment> setEquipmentTemplates(){
-		equipmentTemplates = new List<Equipment> ();
-
-		
 	}
 
 	public void OffensiveGloves()

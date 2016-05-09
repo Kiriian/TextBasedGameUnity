@@ -48,10 +48,10 @@ public class Main : MonoBehaviour {
 		strength.text = "Strength:\t" + p.strength;
 
 		if (Input.GetKeyDown (KeyCode.DownArrow)) {
-			if (r.checkForMonster == null) {
+			if (r.checkForMonster(r) == null) {
 				r = m.MoveSouth (roomArray2d);
 				setMoveText (r);
-			} else if (r.checkForMonster != null) {
+			} else if (r.checkForMonster(r) != null) {
 				int number = UnityEngine.Random.Range (1, 10);
 				if (number >= 8) {
 					r = m.MoveSouth (roomArray2d);
@@ -61,10 +61,10 @@ public class Main : MonoBehaviour {
 				}
 			}
 		} else if (Input.GetKeyDown (KeyCode.UpArrow)) {
-			if (r.checkForMonster == null) {
+			if (r.checkForMonster(r) == null) {
 				r = m.MoveNorth (roomArray2d);
 				setMoveText (r);
-			} else if (r.checkForMonster != null) {
+			} else if (r.checkForMonster(r) != null) {
 				int number = UnityEngine.Random.Range (1, 10);
 				if (number >= 8) {
 					r = m.MoveNorth (roomArray2d);
@@ -74,10 +74,10 @@ public class Main : MonoBehaviour {
 				}
 			}
 		} else if (Input.GetKeyDown (KeyCode.RightArrow)) {
-			if (r.checkForMonster == null) {
+			if (r.checkForMonster(r) == null) {
 				r = m.MoveEast (roomArray2d);
 				setMoveText (r);
-			} else if (r.checkForMonster != null) {
+			} else if (r.checkForMonster(r) != null) {
 				int number = UnityEngine.Random.Range (1, 10);
 				if (number >= 8) {
 					r = m.MoveEast (roomArray2d);
@@ -93,10 +93,10 @@ public class Main : MonoBehaviour {
 			setLootText (m, roomArray2d);
 		} else if (Input.GetKeyDown (KeyCode.Space) && m.getCurrentRoom (roomArray2d).EntranceToNextFloor == true) {
 			roomArray2d = f.Floor2 (m);
-			if (r.checkForMonster == null) {
+			if (r.checkForMonster(r) == null) {
 				r = m.MoveNorth (roomArray2d);
 				setMoveText (r);
-			} else if (r.checkForMonster != null) {
+			} else if (r.checkForMonster(r) != null) {
 				int number = UnityEngine.Random.Range (1, 10);
 				if (number >= 8) {
 					r = m.MoveNorth (roomArray2d);
@@ -181,13 +181,23 @@ public class Main : MonoBehaviour {
 
 	public void EscapeMonster (Room r)
 	{
-		Monster mon = r.RoomMonster;
-		int playerDamage = p.hurt (mon.strength - p.defense);
-		if (p.currentHealth<=0) {
-			Application.LoadLevel (2);
-			return "";
+		if (r.RoomMonster != null) {
+			Monster mon = r.RoomMonster;
+			int playerDamage = p.hurt (mon.strength - p.defense);
+			if (p.currentHealth<=0) {
+				Application.LoadLevel (2);
+			}
+			combatText.text = "You tried to escape, the Monster hurts you for " + playerDamage;
 		}
-		return "You tried to escape, the Monster hurts you for " + playerDamage;
+		else if (r.RoomBoss != null) {
+			Boss boss = r.RoomBoss;
+			int playerDamage = p.hurt (boss.strength - p.defense);
+			if (p.currentHealth<=0) {
+				Application.LoadLevel (2);
+			}
+			combatText.text = "You tried to escape, the Monster hurts you for " + playerDamage;
+		}
+
 	}
 }
 	
