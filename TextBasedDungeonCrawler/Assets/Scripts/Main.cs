@@ -38,6 +38,9 @@ public class Main : MonoBehaviour {
 		setMoveText (r);
 
 		playerName.text = p.actorName;
+
+		Map map = ScriptableObject.CreateInstance<Map>();
+		map.CreateMap (roomArray2d);
 	}
 
 	void Update()
