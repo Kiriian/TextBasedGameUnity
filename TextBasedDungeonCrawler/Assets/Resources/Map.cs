@@ -29,7 +29,6 @@ public class Map : ScriptableObject {
 		for (int i = 0; i < 5; i++) {
 			for (int j = 0; j < 5; j++) {
 				if (roomArray[i,j] != null){
-					Debug.Log (i + " " + j);
 					tileMap [i, j] = 1;
 				}
 			}
@@ -53,10 +52,10 @@ public class Map : ScriptableObject {
 	public void SetPlayerMapPos(int x, int y, int nextX, int nextY){
 
 		//		GameObject tile = GameObject.Find ("tile_"+x+","+y);
-		GameObject newTile = GameObject.Find ("tile_" + nextX + "," + nextY);
+		//GameObject newTile = GameObject.Find ("tile_" + nextX + "," + nextY);
 		//		tile.GetComponent<Renderer> ().material = Resources.Load ("grass");
 
-		newTile.GetComponent<Renderer>().material = (Material)Resources.Load ("brick", typeof(Material));
+		//newTile.GetComponent<Renderer>().material = (Material)Resources.Load ("brick", typeof(Material));
 	}
 
 }

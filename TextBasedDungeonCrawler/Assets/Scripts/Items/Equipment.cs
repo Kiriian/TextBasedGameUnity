@@ -29,6 +29,7 @@ public class Equipment : Item {
 		this.heldQuantity = 1;
 	}
 
+	[EquipmentModifier]
 	public void OffensiveGloves()
 	{
 		equipType = "gloves";
@@ -38,6 +39,7 @@ public class Equipment : Item {
 		healthMod = 0;
 	}
 
+	[EquipmentModifier]
 	public void DefensiveGloves()
 	{
 		equipType = "gloves";
@@ -47,6 +49,7 @@ public class Equipment : Item {
 		healthMod = 1;
 	}
 
+	[EquipmentModifier]
 	public void MiddlingGloves()
 	{
 		equipType = "gloves";
@@ -56,6 +59,7 @@ public class Equipment : Item {
 		healthMod = 1;
 	}
 
+	[EquipmentModifier]
 	public void OffensiveBoots()
 	{
 		equipType = "boots";
@@ -65,6 +69,7 @@ public class Equipment : Item {
 		healthMod = 0;
 	}
 
+	[EquipmentModifier]
 	public void DefensiveBoots()
 	{
 		equipType = "boots";
@@ -74,6 +79,7 @@ public class Equipment : Item {
 		healthMod = 1;
 	}
 
+	[EquipmentModifier]
 	public void MiddlingBoots()
 	{
 		equipType = "gloves";
@@ -83,6 +89,7 @@ public class Equipment : Item {
 		healthMod = 1;
 	}
 
+	[EquipmentModifier]
 	public void OffensiveHelmet()
 	{
 		equipType = "helmet";
@@ -92,6 +99,7 @@ public class Equipment : Item {
 		healthMod = 0;
 	}
 
+	[EquipmentModifier]
 	public void DefensiveHelmet()
 	{
 		equipType = "helmet";
@@ -101,6 +109,7 @@ public class Equipment : Item {
 		healthMod = 2;
 	}
 
+	[EquipmentModifier]
 	public void MiddlingHelmet()
 	{
 		equipType = "helmet";
@@ -110,6 +119,7 @@ public class Equipment : Item {
 		healthMod = 2;
 	}
 
+	[EquipmentModifier]
 	public void OffensivePants()
 	{
 		equipType = "pants";
@@ -119,6 +129,7 @@ public class Equipment : Item {
 		healthMod = 2;
 	}
 
+	[EquipmentModifier]
 	public void DefensivePants()
 	{
 		equipType = "pants";
@@ -128,6 +139,7 @@ public class Equipment : Item {
 		healthMod = 2;
 	}
 
+	[EquipmentModifier]
 	public void MiddlingPants()
 	{
 		equipType = "pants";
@@ -137,6 +149,7 @@ public class Equipment : Item {
 		healthMod = 2;
 	}
 
+	[EquipmentModifier]
 	public void OffensiveChest()
 	{
 		equipType = "chest";
@@ -146,6 +159,7 @@ public class Equipment : Item {
 		healthMod = 2;
 	}
 
+	[EquipmentModifier]
 	public void DefensiveChest()
 	{
 		equipType = "chest";
@@ -155,6 +169,7 @@ public class Equipment : Item {
 		healthMod = 2;
 	}
 
+	[EquipmentModifier]
 	public void MiddlingChest()
 	{
 		equipType = "chest";
@@ -164,6 +179,7 @@ public class Equipment : Item {
 		healthMod = 2;
 	}
 
+	[EquipmentModifier]
 	public void Sword()
 	{
 		equipType = "weapon";
@@ -172,4 +188,8 @@ public class Equipment : Item {
 		defenseMod = 0;
 		healthMod = 0;
 	}
+}
+
+public class EquipmentModifier : ConstructorSafeAttribute {
+	
 }
