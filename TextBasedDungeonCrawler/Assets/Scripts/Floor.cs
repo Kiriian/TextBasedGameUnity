@@ -67,8 +67,8 @@ public class Floor : ScriptableObject {
 		// Comment out all code above and uncomment the two following lines to enable floor generation.
 
 
-//		FloorGenerator fg = ScriptableObject.CreateInstance<FloorGenerator> ();
-//		roomArray2d = fg.GenerateFloor ();
+		FloorGenerator fg = ScriptableObject.CreateInstance<FloorGenerator> ();
+		roomArray2d = fg.GenerateFloor ();
 
 		return roomArray2d;
 	}

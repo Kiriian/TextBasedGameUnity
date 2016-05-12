@@ -11,12 +11,12 @@ public class FloorGenerator : ScriptableObject
 	private Room[,] roomArray2d;
 	private Item item;
 	private List<Direction> directions = new List<Direction> ();
-	private string[] descriptions = {
-		"A narrow hallway with some unburned torches.",
-		"A long room with cages dangling from the ceiling.",
-		"A room containing alchemy workbenches.",
-		"A nondescript cobblestone room."
-	};
+//	private string[] descriptions = {
+//		"A narrow hallway with some unburned torches.",
+//		"A long room with cages dangling from the ceiling.",
+//		"A room containing alchemy workbenches.",
+//		"A nondescript cobblestone room."
+//	};
 	private bool bossRoom;
 	private int amountOfGeneratedRooms;
 	private int xCoord;
@@ -54,7 +54,8 @@ public class FloorGenerator : ScriptableObject
 	private void GenerateRoom (int x, int y)
 	{
 		Room r = ScriptableObject.CreateInstance<Room> ();
-		r.Description = descriptions [Random.Range (0, 3)];
+		RoomDescriptor rd = ScriptableObject.CreateInstance<RoomDescriptor> ();
+		r.Description = rd.GenerateDescription ();
 
 		roomArray2d [x, y] = r;
 
