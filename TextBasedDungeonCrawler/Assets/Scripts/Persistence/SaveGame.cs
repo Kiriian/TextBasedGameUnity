@@ -10,13 +10,12 @@ public class SaveGame : MonoBehaviour {
 	// Skip to 33:00. Bad video, wastes a huge amount of time before getting to the actual topic.
 	// No clue how this is allowed in an official in-house tutorial. Terrible.
 
-	public void Save(){
+	public void Save(SessionData sd){
 		BinaryFormatter bf = new BinaryFormatter ();
 		FileStream file = File.Open (Application.persistentDataPath + "/playerInfo.dat", FileMode.Open);
 
-		SessionData sd = new SessionData();
 
-		bf.Serialize (bf, sd);
+		bf.Serialize (file, sd);
 		file.Close ();
 	}
 }

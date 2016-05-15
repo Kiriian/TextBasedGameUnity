@@ -3,11 +3,12 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 
+[Serializable]
 public class Player : Actor {
 
 
-	private ICollection<Item> items = new List<Item>();
-	private PlayerEquipment equipment;
+	public ICollection<Item> items = new List<Item>();
+	public PlayerEquipment equipment;
 
 	public Player (string actorName, int maxHealth, int maxMana)
 	{
@@ -38,7 +39,7 @@ public class Player : Actor {
 		equipment = ScriptableObject.CreateInstance<PlayerEquipment> ();
 
 		Equipment testSword = ScriptableObject.CreateInstance<Equipment>();
-		testSword.setAttributes ("Test Sword", "weapon", 2, 0, 0, 0, null);
+		testSword.setAttributes ("Test Sword", "weapon", 2, 0, 0, 0);
 		equipment.equip (this,testSword);
 
 	}
@@ -106,12 +107,12 @@ public class Player : Actor {
 
 public class PlayerEquipment : ScriptableObject {
 
-	Equipment equippedHead;
-	Equipment equippedChest;
-	Equipment equippedGloves;
-	Equipment equippedPants;
-	Equipment equippedBoots;
-	Equipment equippedWeapon;
+	public Equipment equippedHead;
+	public Equipment equippedChest;
+	public Equipment equippedGloves;
+	public Equipment equippedPants;
+	public Equipment equippedBoots;
+	public Equipment equippedWeapon;
 
 	// Equip a new piece of gear. Will return the piece of gear that is replaced.
 	public Equipment equip(Player player, Equipment equipment){

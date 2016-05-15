@@ -1,12 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System;
 
+[Serializable]
 public class Movement : ScriptableObject {
 
-	private int x;
-	private int y;
-	private int xAxis;
-	private int yAxis;
+	public int x;
+	public  int y;
+	public  int xAxis;
+	public  int yAxis;
 
 	public Room MoveSouth (Room[,] roomArray){
 		xAxis = roomArray.GetLength (0) - 1;

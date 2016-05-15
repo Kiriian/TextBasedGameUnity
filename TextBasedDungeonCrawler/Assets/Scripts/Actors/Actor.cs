@@ -1,7 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
+[Serializable]
 public class Actor : ScriptableObject {
 
 	public string actorName;
@@ -13,8 +15,8 @@ public class Actor : ScriptableObject {
 	public int defense;
 	public int chanceToDodge;
 	public int chanceToHit;
-	private ICollection<StatusEffect> statEffects = new List<StatusEffect>();
-	private ICollection<Skill> skills = new List<Skill>();
+	public ICollection<StatusEffect> statEffects = new List<StatusEffect>();
+	public ICollection<Skill> skills = new List<Skill>();
 	
 
 	/// <summary>

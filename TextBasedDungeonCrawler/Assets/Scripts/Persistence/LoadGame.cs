@@ -6,13 +6,15 @@ using System.IO;
 
 public class LoadGame : MonoBehaviour {
 
-	public void Load(){
+	public SessionData Load(){
 		if (File.Exists(Application.persistentDataPath + "/playerInfo.dat"))
 		{
 			BinaryFormatter bf = new BinaryFormatter ();
-			FileStream file = File.Open (Application.persistentDataPath + "/playerInfo.dat");
+			FileStream file = File.Open (Application.persistentDataPath + "/playerInfo.dat", FileMode.Open);
 			SessionData data = (SessionData)bf.Deserialize (file);
 			file.Close ();
+			return data;
 		}
+		return null;
 	}
 }

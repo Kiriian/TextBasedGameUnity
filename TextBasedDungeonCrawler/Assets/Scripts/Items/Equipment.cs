@@ -9,7 +9,7 @@ public class Equipment : Item {
 	public int defenseMod;
 	public int healthMod;
 	public int manaMod;
-	public StatusEffect activeEffect;
+	//public StatusEffect activeEffect;
 
 	public Equipment ()
 	{
@@ -17,14 +17,13 @@ public class Equipment : Item {
 	}
 		
 
-	public void setAttributes(string name, string equipType, int strengthMod, int defenseMod, int healthMod, int manaMod, StatusEffect activeEffect){
+	public void setAttributes(string name, string equipType, int strengthMod, int defenseMod, int healthMod, int manaMod){
 		this.Name = name;
 		this.equipType = equipType;
 		this.strengthMod = strengthMod;
 		this.defenseMod = defenseMod;
 		this.healthMod = healthMod;
 		this.manaMod = manaMod;
-		this.activeEffect = activeEffect;
 		this.carryLimit = 1;
 		this.heldQuantity = 1;
 	}

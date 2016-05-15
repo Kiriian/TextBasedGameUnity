@@ -118,7 +118,15 @@ public class Main : MonoBehaviour {
 			setDodgeCombatText (ce, roomArray2d, p, m);
 		} else if (Input.GetKeyDown (KeyCode.Q)) {
 			setUseHealingPotionText (p);
+		} else if (Input.GetKeyDown (KeyCode.V)) {
+			SaveGame sg = new SaveGame ();
+			SessionData sd = new SessionData (roomArray2d, m, p);
+			sg.Save (sd);
+		} else if (Input.GetKeyDown (KeyCode.B)) {
+			LoadGame lg = new LoadGame ();
+ 		    SessionData sd = lg.Load ();
 		}
+
 	}
 
 	public void ScreenButtonPressed (int buttonID){
