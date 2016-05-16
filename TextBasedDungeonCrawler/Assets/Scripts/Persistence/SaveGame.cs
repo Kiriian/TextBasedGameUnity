@@ -4,7 +4,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System;
 using System.IO;
 
-public class SaveGame : MonoBehaviour {
+public class SaveGame {
 
 	// https://www.youtube.com/watch?v=J6FfcJpbPXE
 	// Skip to 33:00. Bad video, wastes a huge amount of time before getting to the actual topic.

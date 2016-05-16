@@ -125,6 +125,7 @@ public class Main : MonoBehaviour {
 		} else if (Input.GetKeyDown (KeyCode.B)) {
 			LoadGame lg = new LoadGame ();
  		    SessionData sd = lg.Load ();
+
 		}
 
 	}

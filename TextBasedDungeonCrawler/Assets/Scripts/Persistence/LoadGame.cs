@@ -4,7 +4,7 @@ using System.Runtime.Serialization.Formatters.Binary;
 using System;
 using System.IO;
 
-public class LoadGame : MonoBehaviour {
+public class LoadGame {
 
 	public SessionData Load(){
 		if (File.Exists(Application.persistentDataPath + "/playerInfo.dat"))

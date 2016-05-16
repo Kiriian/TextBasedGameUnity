@@ -48,7 +48,10 @@ public class SessionData
 			x = m.x,
 			y = m.y,
 			xAxis = m.xAxis,
-			yAxis = m.yAxis
+			yAxis = m.yAxis,
+			xCoordinate = m.xCoordinate,
+			YCoordinate = m.yCoordinate
+
 		};
 
 	}
@@ -159,12 +162,6 @@ public class PlayerDat
 	public ICollection<ItemDat> items = new List<ItemDat> ();
 	public PlayerEquipDat equipment;
 
-
-
-
-
-
-
 }
 
 [Serializable]
@@ -207,6 +204,8 @@ public class MovementDat{
 	public int y;
 	public int xAxis;
 	public int yAxis;
+	public int xCoordinate;
+	public int YCoordinate;
 	
 }
 
