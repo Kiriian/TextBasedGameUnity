@@ -33,7 +33,7 @@ public class Monster : Enemy {
 		strength = 2;
 		defense = 1;
 		chanceToHit = 7;
-		droprate = 10;
+		droprate = 100;
 		itemRarity = 10;
 
 	}
@@ -47,7 +47,7 @@ public class Monster : Enemy {
 		strength = 4;
 		defense = 4;
 		chanceToHit = 3;
-		droprate = 40;
+		droprate = 100;
 		itemRarity = 20;
 	}
 
@@ -60,7 +60,7 @@ public class Monster : Enemy {
 		strength = 4;
 		defense = 1;
 		chanceToHit = 5;
-		droprate = 40;
+		droprate = 100;
 		itemRarity = 20;
 	}
 
@@ -74,7 +74,7 @@ public class Monster : Enemy {
 		strength = 4;
 		defense = 1;
 		chanceToHit = 5;
-		droprate = 10;
+		droprate = 100;
 		itemRarity = 10;
 	}
 }

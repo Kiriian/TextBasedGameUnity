@@ -33,7 +33,7 @@ public class ButtonClicked : ScriptableObject {
 			main.setAttackCombatText (ce, roomArray, p, m);
 			break;
 		case 7:
-			main.setPickUpLootText (m, p);
+			main.setPickUpLootText (m, p, m.getCurrentRoom(roomArray));
 			break;
 		case 8:
 			main.setInventoryText (p);

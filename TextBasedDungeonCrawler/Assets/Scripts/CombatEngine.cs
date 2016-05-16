@@ -6,6 +6,7 @@ public class CombatEngine : ScriptableObject {
 
 	Monster mon;
 	Boss boss;
+	Equipment e;
 
 	public string Attack(Player p, Room[,] roomArr, int x, int y){
 		if (roomArr[x,y].RoomMonster!=null){
@@ -14,6 +15,12 @@ public class CombatEngine : ScriptableObject {
 			int playerDamage = p.hurt (mon.strength - p.defense);
 			if (mon.currentHealth<=0) {
 				roomArr [x, y].RoomMonster = null;
+				e = mon.drops (mon.droprate, mon.itemRarity);
+				if (e != null) {
+					Debug.Log ("item monster dropped " + e.equipType);
+					roomArr [x, y].Items.Add (e);
+					return "You hurt the " + mon.actorName + " for " + monDamage + " damage. It dies and drops " + e.Name + ".";
+				}
 				return "You hurt the " + mon.actorName + " for " + monDamage + " damage. It dies.";
 			}
 			else if (p.currentHealth<=0) {
@@ -27,6 +34,11 @@ public class CombatEngine : ScriptableObject {
 			int playerDamage = p.hurt (boss.strength - p.defense);
 			if (boss.currentHealth<=0) {
 				roomArr [x, y].RoomBoss = null;
+				e = boss.drops (boss.droprate, boss.itemRarity);
+				if (e != null) {
+					roomArr [x, y].Items.Add (e);
+					return "You hurt the " + boss.actorName + " for " + bossDamage + " damage. It dies and drops " + e.Name + ".";
+				}
 				return "You hurt the " + boss.actorName + " for " + bossDamage + " damage. It dies.";
 			}
 			if (p.currentHealth<=0) {

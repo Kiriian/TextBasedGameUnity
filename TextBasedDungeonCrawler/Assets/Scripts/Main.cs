@@ -12,6 +12,7 @@ public class Main : MonoBehaviour {
 	private Floor f;
 	private Room r;
 	private ButtonClicked bt;
+	private Map map;
 
 	public Text playerName;
 	public Text roomDescriptionText;
@@ -39,7 +40,7 @@ public class Main : MonoBehaviour {
 
 		playerName.text = p.actorName;
 
-		Map map = ScriptableObject.CreateInstance<Map>();
+		map = ScriptableObject.CreateInstance<Map>();
 		map.CreateMap (roomArray2d);
 	}
 
@@ -95,8 +96,9 @@ public class Main : MonoBehaviour {
 		} else if (Input.GetKeyDown (KeyCode.I)) {
 			setLootText (m, roomArray2d);
 		} else if (Input.GetKeyDown (KeyCode.Space) && m.getCurrentRoom (roomArray2d).EntranceToNextFloor == true) {
-			roomArray2d = f.Floor2 (m);
 			if (r.checkForMonster(r) == null) {
+				roomArray2d = f.Floor1 ();
+				map.CreateMap (roomArray2d);
 				r = m.MoveNorth (roomArray2d);
 				setMoveText (r);
 			} else if (r.checkForMonster(r) != null) {
@@ -111,7 +113,7 @@ public class Main : MonoBehaviour {
 		} else if (Input.GetKeyDown (KeyCode.A)) {
 			setAttackCombatText (ce, roomArray2d, p, m);
 		} else if (Input.GetKeyDown (KeyCode.P)) {
-			setPickUpLootText (m, p);
+			setPickUpLootText (m, p, r);
 		} else if (Input.GetKeyDown (KeyCode.M)) {
 			setInventoryText (p);
 		} else if (Input.GetKeyDown (KeyCode.D)) {
@@ -139,6 +141,7 @@ public class Main : MonoBehaviour {
 
 	public void setMoveText(Room r)
 	{
+		lootText.text = "";
 		movementText.text = m.Options (r);
 		roomDescriptionText.text = r.Description;
 		combatText.text = r.checkForMonster (r);
@@ -158,12 +161,25 @@ public class Main : MonoBehaviour {
 		combatText.text = ce.Attack (p, roomArray, m.xCoordinate, m.yCoordinate);	
 	}
 
-	public void setPickUpLootText(Movement m, Player p)
+	public void setPickUpLootText(Movement m, Player p, Room r)
 	{
-		if (m.getCurrentRoom (roomArray2d).Items.Count != 0) {
-			p.addItem (m.getCurrentRoom (roomArray2d).Items [0]);
-			lootText.text = "You pick up the " + (m.getCurrentRoom (roomArray2d).Items [0].Name);
-			m.getCurrentRoom (roomArray2d).Items.RemoveAt (0);
+		Equipment newEquipment;
+		Equipment oldEquipment;
+
+		if (r.Items.Count != 0) {
+			if (r.Items [0].GetType () == typeof(Equipment)) {
+				newEquipment = (Equipment)r.Items [0];
+				oldEquipment = p.addEquipment (newEquipment);
+				Debug.Log ("Returned equipment is: " + oldEquipment.itemName);
+				r.Items.RemoveAt (0);
+				r.Items.Add (oldEquipment);
+				lootText.text = "You equip the " + (newEquipment.Name);
+				Debug.Log ("from when you pick something up. " + r.Items [0].itemName);
+			} else {
+				p.addItem (r.Items [0]);
+				lootText.text = "You pick up the " + (r.Items [0].itemName);
+				r.Items.RemoveAt (0);
+			}
 		} else {
 			lootText.text = "There is nothing to pick up";
 		}
@@ -209,7 +225,6 @@ public class Main : MonoBehaviour {
 			}
 			combatText.text = "You tried to escape, the Monster hurts you for " + playerDamage;
 		}
-
 	}
 }
 	

@@ -84,6 +84,9 @@ public class Player : Actor {
 		items.Remove (i);
 	}
 
+	/// <summary>	
+	/// Uses Healing potion if the player has one.
+	/// </summary>
 	public HealingPotion getHealingPotion(){
 		foreach (HealingPotion pots in items) {
 			return pots;
@@ -116,71 +119,72 @@ public class PlayerEquipment : ScriptableObject {
 
 	// Equip a new piece of gear. Will return the piece of gear that is replaced.
 	public Equipment equip(Player player, Equipment equipment){
-
 		// Used for taking the equipment that's currently worn, so that it can be returned and left on the floor after putting on the new piece of equipment.
 		Equipment swappedEquip = ScriptableObject.CreateInstance<Equipment>();
 		swappedEquip = null;
 		Equipment nullEquip = ScriptableObject.CreateInstance<Equipment>();
 
+		Debug.Log (equipment.equipType);
+
 		switch (equipment.equipType)
 		{
-
-		case "head":
-			if (swappedEquip==null){
-				swappedEquip = nullEquip;
-				equippedHead = equipment;
-			} else {
-				swappedEquip = equippedHead;
-				equippedHead = equipment;
+			case "head":
+				if (swappedEquip==null){
+					swappedEquip = nullEquip;
+					equippedHead = equipment;
+				} else {
+					swappedEquip = equippedHead;
+					equippedHead = equipment;
+				}
+				break;
+			case "chest":
+				if (swappedEquip==null){
+					swappedEquip = nullEquip;
+					equippedChest = equipment;
+				} else {
+					swappedEquip = equippedChest;
+					equippedChest = equipment;
+				}
+				break;
+			case "gloves":
+				if (swappedEquip==null){
+					swappedEquip = nullEquip;
+					equippedGloves = equipment;
+				} else {
+					swappedEquip = equippedGloves;
+					equippedGloves = equipment;
+				}
+				break;
+			case "pants":
+				if (swappedEquip==null){
+					swappedEquip = nullEquip;
+					equippedPants = equipment;
+				} else {
+					swappedEquip = equippedPants;
+					equippedPants = equipment;
+				}
+				break;
+			case "boots":
+				if (swappedEquip==null){
+					swappedEquip = nullEquip;
+					equippedBoots = equipment;
+				} else {
+					swappedEquip = equippedBoots;
+					equippedBoots = equipment;
+				}
+				break;
+			case "weapon":
+				if (swappedEquip==null){
+					swappedEquip = nullEquip;
+					equippedWeapon = equipment;
+				} else {
+					swappedEquip = equippedWeapon;
+					equippedWeapon = equipment;
+				}
+				break;
 			}
-			break;
-		case "chest":
-			if (swappedEquip==null){
-				swappedEquip = nullEquip;
-				equippedChest = equipment;
-			} else {
-				swappedEquip = equippedChest;
-				equippedChest = equipment;
-			}
-			break;
-		case "gloves":
-			if (swappedEquip==null){
-				swappedEquip = nullEquip;
-				equippedGloves = equipment;
-			} else {
-				swappedEquip = equippedGloves;
-				equippedGloves = equipment;
-			}
-			break;
-		case "pants":
-			if (swappedEquip==null){
-				swappedEquip = nullEquip;
-				equippedPants = equipment;
-			} else {
-				swappedEquip = equippedPants;
-				equippedPants = equipment;
-			}
-			break;
-		case "boots":
-			if (swappedEquip==null){
-				swappedEquip = nullEquip;
-				equippedBoots = equipment;
-			} else {
-				swappedEquip = equippedBoots;
-				equippedBoots = equipment;
-			}
-			break;
-		case "weapon":
-			if (swappedEquip==null){
-				swappedEquip = nullEquip;
-				equippedWeapon = equipment;
-			} else {
-				swappedEquip = equippedWeapon;
-				equippedWeapon = equipment;
-			}
-			break;
-		}
-		updateStats (player, equipment, swappedEquip);
+		//updateStats (player, equipment, swappedEquip);
+		Debug.Log("what is returned? " + swappedEquip.itemName);
 		return swappedEquip;
 	}
 

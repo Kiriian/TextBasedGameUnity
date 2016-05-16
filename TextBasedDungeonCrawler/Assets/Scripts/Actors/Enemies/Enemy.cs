@@ -44,4 +44,85 @@ public class Enemy : Actor {
 		this.currentMana = maxMana;
 	}
 
+	public Equipment drops (int droprate, int itemRarity)
+	{
+		Equipment e = ScriptableObject.CreateInstance<Equipment> ();
+		int randomNumber = Random.Range (0, 100);
+
+		if (randomNumber <= droprate) {
+			int rarityNumber = Random.Range (0, itemRarity);
+			int dropNumber = Random.Range (1, 3);
+
+			if (rarityNumber <= 25) {
+				switch (dropNumber) {
+				case 1:
+					e.DefensiveGloves ();
+					return e;
+				case 2:
+					e.OffensiveGloves ();
+					return e;
+				case 3:
+					e.MiddlingGloves ();
+					return e;
+				}
+			}
+			if (rarityNumber <= 50) {
+				switch (dropNumber) {
+				case 1:
+					e.DefensiveBoots ();
+					return e;
+				case 2:
+					e.OffensiveBoots ();
+					return e;
+				case 3:
+					e.MiddlingBoots ();
+					return e;
+				}
+			}
+			if (rarityNumber <= 60) {
+				switch (dropNumber) {
+				case 1:
+					e.DefensiveHelmet ();
+					return e;
+				case 2:
+					e.OffensiveHelmet ();
+					return e;
+				case 3:
+					e.MiddlingHelmet ();
+					return e;
+				}
+			}
+			if (rarityNumber <= 70) {
+				switch (dropNumber) {
+				case 1:
+					e.DefensivePants ();
+					return e;
+				case 2:
+					e.OffensivePants ();
+					return e;
+				case 3:
+					e.MiddlingPants ();
+					return e;
+				}
+			}
+			if (rarityNumber <= 80) {
+				switch (dropNumber) {
+				case 1:
+					e.DefensiveChest ();
+					return e;
+				case 2:
+					e.OffensiveChest ();
+					return e;
+				case 3:
+					e.MiddlingChest ();
+					return e;
+				}
+			}
+			if (rarityNumber <= 90) {
+				e.Sword ();
+				return e;
+			}
+		}
+		return null;
+	}
 }

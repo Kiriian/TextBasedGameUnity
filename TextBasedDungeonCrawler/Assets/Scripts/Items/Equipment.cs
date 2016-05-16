@@ -62,7 +62,7 @@ public class Equipment : Item {
 	public void OffensiveBoots()
 	{
 		equipType = "boots";
-		name = "Leather boots";
+		name = "Leather Boots";
 		strengthMod = 3;
 		defenseMod = 0;
 		healthMod = 0;
@@ -81,7 +81,7 @@ public class Equipment : Item {
 	[EquipmentModifier]
 	public void MiddlingBoots()
 	{
-		equipType = "gloves";
+		equipType = "boots";
 		name = "Hard Leather Boots";
 		strengthMod = 1;
 		defenseMod = 1;
