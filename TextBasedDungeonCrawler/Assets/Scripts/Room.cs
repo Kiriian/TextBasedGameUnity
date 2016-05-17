@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 
-[Serializable]
 public class Room : ScriptableObject{
 
 	private string description;
@@ -64,12 +63,13 @@ public class Room : ScriptableObject{
 	public List<Direction> Directions {
 
 		get { return this.directions; }
-
+		set { this.directions = value; }
 	}
 
 	public List<Item> Items {
 
 		get { return this.items; }
+		set { this.items = value; }
 
 	}
 

@@ -127,7 +127,7 @@ public class Main : MonoBehaviour {
 		} else if (Input.GetKeyDown (KeyCode.B)) {
 			LoadGame lg = new LoadGame ();
  		    SessionData sd = lg.Load ();
-
+			LoadGameFromSessionData (sd);
 		}
 
 	}
@@ -225,6 +225,17 @@ public class Main : MonoBehaviour {
 			}
 			combatText.text = "You tried to escape, the Monster hurts you for " + playerDamage;
 		}
+	}
+
+	public void LoadGameFromSessionData (SessionData sd){
+
+		LoadedDataUpdater ldu = new LoadedDataUpdater ();
+		p = ldu.LoadPlayer (sd.p);
+		m = ldu.LoadMovement (sd.m);
+		roomArray2d = ldu.LoadFloor (sd.roomArray2d);
+		map.ClearMap ();
+		map.CreateMap (roomArray2d);
+
 	}
 }
 	

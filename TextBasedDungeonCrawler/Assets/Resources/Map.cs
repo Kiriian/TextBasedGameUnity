@@ -20,9 +20,20 @@ public class Map : ScriptableObject {
 	public void CreateMap(Room[,] roomArray){
 		TileSize = 25;
 		StartPoint = new Vector2 (-65, -120);
+		ResetTileMap ();
 		GenerateTileMap (roomArray);
 		PopulateTileMap();
 		SetPlayerMapPos (0, 0, 0, 0);
+	}
+
+	public void ResetTileMap(){
+		tileMap = new int[,] {
+			{ 0, 0, 0, 0, 0 },
+			{ 0, 0, 0, 0, 0 },
+			{ 0, 0, 0, 0, 0 },
+			{ 0, 0, 0, 0, 0 },
+			{ 0, 0, 0, 0, 0 }
+		};
 	}
 
 	public void GenerateTileMap(Room[,] roomArray){
@@ -44,8 +55,16 @@ public class Map : ScriptableObject {
 				tile.name = "tile_" + i + "," + j;
 				tile.transform.SetParent (GameObject.Find("PlayerInfoBackground").transform);
 				tile.transform.localPosition = new Vector3 (StartPoint.x + (TileSize * j) + (TileSize / 2), StartPoint.y - (TileSize * i) - (TileSize / 2), -35);
+				tile.tag = "maptile";
 
 			}
+		}
+	}
+
+	public void ClearMap(){
+		GameObject[] tiles = GameObject.FindGameObjectsWithTag ("maptile");
+		foreach (var item in tiles) {
+			Destroy (item);
 		}
 	}
 
