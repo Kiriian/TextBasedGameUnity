@@ -128,13 +128,13 @@ public class SessionData
 	public PlayerEquipDat GeneratePlayerEquipDat (Player p)
 	{
 		PlayerEquipDat ped = new PlayerEquipDat ();
-		if (p.equipment.equippedHead != null) {
+		if (p.equipment.equippedHelmet != null) {
 			EquipDat eq = new EquipDat ();
-			eq.equipType = p.equipment.equippedHead.equipType;
-			eq.strengthMod = p.equipment.equippedHead.strengthMod;
-			eq.defenseMod = p.equipment.equippedHead.defenseMod;
-			eq.healthMod = p.equipment.equippedHead.healthMod;
-			eq.manaMod = p.equipment.equippedHead.manaMod;
+			eq.equipType = p.equipment.equippedHelmet.equipType;
+			eq.strengthMod = p.equipment.equippedHelmet.strengthMod;
+			eq.defenseMod = p.equipment.equippedHelmet.defenseMod;
+			eq.healthMod = p.equipment.equippedHelmet.healthMod;
+			eq.manaMod = p.equipment.equippedHelmet.manaMod;
 			ped.equippedHead = eq;
 		} else {
 			ped.equippedHead = null;

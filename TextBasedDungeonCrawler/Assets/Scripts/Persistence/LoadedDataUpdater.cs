@@ -115,9 +115,9 @@ public class LoadedDataUpdater {
 			eq.defenseMod = p.equipment.equippedHead.defenseMod;
 			eq.healthMod = p.equipment.equippedHead.healthMod;
 			eq.manaMod = p.equipment.equippedHead.manaMod;
-			ped.equippedHead = eq;
+			ped.equippedHelmet = eq;
 		} else {
-			ped.equippedHead = null;
+			ped.equippedHelmet = null;
 		}
 		if (p.equipment.equippedChest != null) {
 			Equipment eq = new Equipment ();

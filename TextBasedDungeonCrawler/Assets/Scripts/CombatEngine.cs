@@ -11,8 +11,8 @@ public class CombatEngine : ScriptableObject {
 	public string Attack(Player p, Room[,] roomArr, int x, int y){
 		if (roomArr[x,y].RoomMonster!=null){
 			mon = roomArr [x, y].RoomMonster;
-			int monDamage = mon.hurt (p.strength-mon.defense);
-			int playerDamage = p.hurt (mon.strength - p.defense);
+			int monDamage = mon.hurt (Mathf.Clamp(p.strength-mon.defense, 1, 1000));
+			int playerDamage = p.hurt (Mathf.Clamp(mon.strength - p.defense, 1, 1000));
 			if (mon.currentHealth<=0) {
 				roomArr [x, y].RoomMonster = null;
 				e = mon.drops (mon.droprate, mon.itemRarity);
@@ -30,8 +30,8 @@ public class CombatEngine : ScriptableObject {
 			return "You hurt the " + mon.actorName + " for " + monDamage + " damage. Its health is now " + mon.currentHealth + ". The " + mon.actorName + " hurts you for " + playerDamage + ".";
 		} if (roomArr[x,y].RoomBoss!=null){
 			boss = roomArr [x, y].RoomBoss;
-			int bossDamage = boss.hurt (p.strength-boss.defense);
-			int playerDamage = p.hurt (boss.strength - p.defense);
+			int bossDamage = boss.hurt (Mathf.Clamp(p.strength-boss.defense, 1, 1000));
+			int playerDamage = p.hurt (Mathf.Clamp(boss.strength - p.defense, 1, 1000));
 			if (boss.currentHealth<=0) {
 				roomArr [x, y].RoomBoss = null;
 				e = boss.drops (boss.droprate, boss.itemRarity);

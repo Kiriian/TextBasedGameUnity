@@ -8,7 +8,7 @@ public class Floor : ScriptableObject {
 	private Boss boss;
 	private Room[,] roomArray2d;
 
-	public Room[,] Floor1(){
+	public Room[,] Floor1(Movement m){
 
 		// Temporary for testing.
 //		mon = ScriptableObject.CreateInstance<Monster>();
@@ -66,6 +66,8 @@ public class Floor : ScriptableObject {
 //
 		// Comment out all code above and uncomment the two following lines to enable floor generation.
 
+		m.xCoordinate = 0;
+		m.yCoordinate = 0;
 
 		FloorGenerator fg = ScriptableObject.CreateInstance<FloorGenerator> ();
 		roomArray2d = fg.GenerateFloor ();

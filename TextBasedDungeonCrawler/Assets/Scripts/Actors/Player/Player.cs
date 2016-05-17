@@ -109,7 +109,7 @@ public class Player : Actor {
 
 public class PlayerEquipment : ScriptableObject {
 
-	public Equipment equippedHead;
+	public Equipment equippedHelmet;
 	public Equipment equippedChest;
 	public Equipment equippedGloves;
 	public Equipment equippedPants;
@@ -123,69 +123,67 @@ public class PlayerEquipment : ScriptableObject {
 		swappedEquip = null;
 		Equipment nullEquip = ScriptableObject.CreateInstance<Equipment>();
 
-		Debug.Log (equipment.equipType);
-
 		switch (equipment.equipType)
 		{
-			case "head":
-				if (swappedEquip==null){
-					swappedEquip = nullEquip;
-					equippedHead = equipment;
-				} else {
-					swappedEquip = equippedHead;
-					equippedHead = equipment;
-				}
-				break;
-			case "chest":
-				if (swappedEquip==null){
-					swappedEquip = nullEquip;
-					equippedChest = equipment;
-				} else {
-					swappedEquip = equippedChest;
-					equippedChest = equipment;
-				}
-				break;
-			case "gloves":
-				if (swappedEquip==null){
-					swappedEquip = nullEquip;
-					equippedGloves = equipment;
-				} else {
-					swappedEquip = equippedGloves;
-					equippedGloves = equipment;
-				}
-				break;
-			case "pants":
-				if (swappedEquip==null){
-					swappedEquip = nullEquip;
-					equippedPants = equipment;
-				} else {
-					swappedEquip = equippedPants;
-					equippedPants = equipment;
-				}
-				break;
-			case "boots":
-				if (swappedEquip==null){
-					swappedEquip = nullEquip;
-					equippedBoots = equipment;
-				} else {
-					swappedEquip = equippedBoots;
-					equippedBoots = equipment;
-				}
-				break;
-			case "weapon":
-				if (swappedEquip==null){
-					swappedEquip = nullEquip;
-					equippedWeapon = equipment;
-				} else {
-					swappedEquip = equippedWeapon;
-					equippedWeapon = equipment;
-				}
-				break;
+		case "helmet":
+			if (equippedHelmet==null){
+				swappedEquip = nullEquip;
+				equippedHelmet = equipment;
+			} else {
+				swappedEquip = equippedHelmet;
+				equippedHelmet = equipment;
 			}
-		//updateStats (player, equipment, swappedEquip);
-		Debug.Log("what is returned? " + swappedEquip.itemName);
+			break;
+		case "chest":
+			if (equippedChest==null){
+				swappedEquip = nullEquip;
+				equippedChest = equipment;
+			} else {
+				swappedEquip = equippedChest;
+				equippedChest = equipment;
+			}
+			break;
+		case "gloves":
+			if (equippedGloves==null) {
+				swappedEquip = nullEquip;
+				equippedGloves = equipment;
+			} else {
+				swappedEquip = equippedGloves;
+				equippedGloves = equipment;
+			}
+			break;
+		case "pants":
+			if (equippedPants==null){
+				swappedEquip = nullEquip;
+				equippedPants = equipment;
+			} else {
+				swappedEquip = equippedPants;
+				equippedPants = equipment;
+			}
+			break;
+		case "boots":
+			if (equippedBoots==null){
+				swappedEquip = nullEquip;
+				equippedBoots = equipment;
+			} else {
+				swappedEquip = equippedBoots;
+				equippedBoots = equipment;
+			}
+			break;
+		case "weapon":
+			if (equippedWeapon==null){
+				swappedEquip = nullEquip;
+				equippedWeapon = equipment;
+			} else {
+				swappedEquip = equippedWeapon;
+				equippedWeapon = equipment;
+			}
+			break;
+		}
+		updateStats (player, equipment, swappedEquip);
 		return swappedEquip;
-	}
+	} 
+
 
 	public void updateStats(Player p, Equipment newEquip, Equipment oldEquip){
 		p.strength -= oldEquip.strengthMod;

@@ -4,7 +4,7 @@ using System.Collections;
 public class ButtonClicked : ScriptableObject {
 	private Room r;
 
-	public void CheckButtonPressed (Room[,] roomArray, Movement m, Main main, int id, CombatEngine ce, Player p)
+	public void CheckButtonPressed (Room[,] roomArray, Movement m, Main main, int id, CombatEngine ce, Player p, Map map)
 	{
 		switch (id) {
 		case 0:
@@ -27,7 +27,7 @@ public class ButtonClicked : ScriptableObject {
 			main.setLootText (m, roomArray);
 			break;
 		case 5:
-			//move To next floor
+			main.MoveNextFloor(m.getCurrentRoom(roomArray),map,m);
 			break;
 		case 6:
 			main.setAttackCombatText (ce, roomArray, p, m);

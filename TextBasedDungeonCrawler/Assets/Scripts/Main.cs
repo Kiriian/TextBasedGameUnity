@@ -13,6 +13,7 @@ public class Main : MonoBehaviour {
 	private Room r;
 	private ButtonClicked bt;
 	private Map map;
+	private int floorNumber;
 
 	public Text playerName;
 	public Text roomDescriptionText;
@@ -23,6 +24,7 @@ public class Main : MonoBehaviour {
 	public Text mana;
 	public Text strength;
 	public Text defense;
+	public Text floorNumberText;
 
 
 	void Start () {
@@ -34,7 +36,9 @@ public class Main : MonoBehaviour {
 
 		ce = ScriptableObject.CreateInstance<CombatEngine> ();
 
-		roomArray2d = f.Floor1 ();
+		floorNumber = 1;
+
+		roomArray2d = f.Floor1 (m);
 		r = m.getCurrentRoom (roomArray2d);
 		setMoveText (r);
 
@@ -46,10 +50,11 @@ public class Main : MonoBehaviour {
 
 	void Update ()
 	{
-		health.text = "Health:\t" + p.currentHealth;
-		mana.text = "Mana:\t" + p.currentMana;
+		health.text = "Health:\t" + p.maxHealth+ "/"+ p.currentHealth;
+		mana.text = "Mana:\t" + p.maxMana + "/" + p.currentMana;
 		defense.text = "Defense:\t" + p.defense;
 		strength.text = "Strength:\t" + p.strength;
+		floorNumberText.text = "F" + floorNumber;
 
 		if (Input.GetKeyDown (KeyCode.DownArrow)) {
 			if (r.checkForMonster(r) == null) {
@@ -96,20 +101,7 @@ public class Main : MonoBehaviour {
 		} else if (Input.GetKeyDown (KeyCode.I)) {
 			setLootText (m, roomArray2d);
 		} else if (Input.GetKeyDown (KeyCode.Space) && m.getCurrentRoom (roomArray2d).EntranceToNextFloor == true) {
-			if (r.checkForMonster(r) == null) {
-				roomArray2d = f.Floor1 ();
-				map.CreateMap (roomArray2d);
-				r = m.MoveNorth (roomArray2d);
-				setMoveText (r);
-			} else if (r.checkForMonster(r) != null) {
-				int number = UnityEngine.Random.Range (1, 10);
-				if (number >= 8) {
-					r = m.MoveNorth (roomArray2d);
-					setMoveText (r);
-				} else {
-					EscapeMonster (r);
-				}
-			}
+			MoveNextFloor (r,map,m);
 		} else if (Input.GetKeyDown (KeyCode.A)) {
 			setAttackCombatText (ce, roomArray2d, p, m);
 		} else if (Input.GetKeyDown (KeyCode.P)) {
@@ -135,7 +127,7 @@ public class Main : MonoBehaviour {
 	public void ScreenButtonPressed (int buttonID){
 		bt = ScriptableObject.CreateInstance<ButtonClicked> ();
 
-		bt.CheckButtonPressed (roomArray2d, m, this, buttonID, ce, p);
+		bt.CheckButtonPressed (roomArray2d, m, this, buttonID, ce, p, map);
 	
 	}
 
@@ -143,8 +135,13 @@ public class Main : MonoBehaviour {
 	{
 		lootText.text = "";
 		movementText.text = m.Options (r);
-		roomDescriptionText.text = r.Description;
 		combatText.text = r.checkForMonster (r);
+		if (r.EntranceToNextFloor == true) {
+			roomDescriptionText.text = r.Description + "There are stairs leading further down";
+		} else {
+			roomDescriptionText.text = r.Description;
+		}
+
 	}
 
 	public void setLootText(Movement m, Room[,] roomArray)
@@ -236,6 +233,24 @@ public class Main : MonoBehaviour {
 		map.ClearMap ();
 		map.CreateMap (roomArray2d);
 
+	}
+
+
+	public void MoveNextFloor(Room r, Map map, Movement m)
+	{
+		if (r.checkForMonster (r) == null) {
+			roomArray2d = f.Floor1 (m);
+			floorNumber++;
+			map.CreateMap (roomArray2d);
+			setMoveText (r);
+		} else if (r.checkForMonster (r) != null) {
+			int number = Random.Range (1, 10);
+			if (number >= 9) {
+				setMoveText (m.getCurrentRoom (roomArray2d));
+			} else {
+				EscapeMonster (r);
+			}
+		}
 	}
 }
 	
