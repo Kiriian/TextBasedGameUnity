@@ -44,7 +44,7 @@ public class Main : MonoBehaviour {
 		map.CreateMap (roomArray2d);
 	}
 
-	void Update()
+	void Update ()
 	{
 		health.text = "Health:\t" + p.currentHealth;
 		mana.text = "Mana:\t" + p.currentMana;

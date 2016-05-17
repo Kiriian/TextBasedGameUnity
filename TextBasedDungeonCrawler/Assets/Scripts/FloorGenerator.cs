@@ -85,6 +85,7 @@ public class FloorGenerator : ScriptableObject
 
 			if (roomArray2d [x, y] != null) {
 				roomArray2d [x, y].EntranceToNextFloor = true;
+				AddBoss (x, y);
 				searchingForCoord = false;
 				break;
 			}
@@ -99,12 +100,21 @@ public class FloorGenerator : ScriptableObject
 				}
 				if (roomArray2d [x, y] != null) {
 					roomArray2d [x, y].EntranceToNextFloor = true;
+					AddBoss (x, y);
 					searchingForCoord = false;
 				}
 			}
-
 		}
+	}
 
+	private void AddBoss (int x, int y){
+		roomArray2d [x, y].RoomBoss = ScriptableObject.CreateInstance<Boss> ();
+		int i = Random.Range (0, 1);
+		if (i==0) {
+			roomArray2d [x, y].RoomBoss.Golem ();
+		} else {
+			roomArray2d [x, y].RoomBoss.ScaryGhost ();
+		}
 
 	}
 
