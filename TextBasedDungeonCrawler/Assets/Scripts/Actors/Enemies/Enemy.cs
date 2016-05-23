@@ -51,76 +51,45 @@ public class Enemy : Actor {
 
 		if (randomNumber <= droprate) {
 			int rarityNumber = Random.Range (0, itemRarity);
-			int dropNumber = Random.Range (1, 3);
+
 
 			if (rarityNumber <= 25) {
-				switch (dropNumber) {
-				case 1:
-					e.DefensiveGloves ();
-					return e;
-				case 2:
-					e.OffensiveGloves ();
-					return e;
-				case 3:
-					e.MiddlingGloves ();
-					return e;
-				}
+				e.Gloves();
+				return e;
 			}
 			if (rarityNumber <= 50) {
-				switch (dropNumber) {
-				case 1:
-					e.DefensiveBoots ();
-					return e;
-				case 2:
-					e.OffensiveBoots ();
-					return e;
-				case 3:
-					e.MiddlingBoots ();
-					return e;
-				}
+				e.Boots ();
+				return e;
 			}
 			if (rarityNumber <= 60) {
-				switch (dropNumber) {
-				case 1:
-					e.DefensiveHelmet ();
-					return e;
-				case 2:
-					e.OffensiveHelmet ();
-					return e;
-				case 3:
-					e.MiddlingHelmet ();
-					return e;
-				}
+				e.Helmet();
+				return e;
+
 			}
 			if (rarityNumber <= 70) {
-				switch (dropNumber) {
-				case 1:
-					e.DefensivePants ();
-					return e;
-				case 2:
-					e.OffensivePants ();
-					return e;
-				case 3:
-					e.MiddlingPants ();
-					return e;
-				}
+				e.Pants ();
+				return e;
 			}
 			if (rarityNumber <= 80) {
-				switch (dropNumber) {
-				case 1:
-					e.DefensiveChest ();
-					return e;
-				case 2:
-					e.OffensiveChest ();
-					return e;
-				case 3:
-					e.MiddlingChest ();
-					return e;
-				}
+				e.Chest ();
+				return e;
 			}
 			if (rarityNumber <= 90) {
-				e.Sword ();
-				return e;
+				int dropNumber = Random.Range (1, 4);
+				switch (dropNumber) {
+				case 1:
+					e.SwordAndShield ();
+					return e;
+				case 2:
+					e.Axe ();
+					return e;
+				case 3:
+					e.TwoHandedSword ();
+					return e;
+				case 4:
+					e.Dagger ();
+					return e;
+				}
 			}
 		}
 		return null;

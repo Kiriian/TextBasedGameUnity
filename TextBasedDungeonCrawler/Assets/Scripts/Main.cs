@@ -13,7 +13,8 @@ public class Main : MonoBehaviour {
 	private Room r;
 	private ButtonClicked bt;
 	private Map map;
-	private int floorNumber;
+
+	public static int floorNumber;
 
 	public Text playerName;
 	public Text roomDescriptionText;
@@ -25,7 +26,6 @@ public class Main : MonoBehaviour {
 	public Text strength;
 	public Text defense;
 	public Text floorNumberText;
-
 
 	void Start () {
 		f = ScriptableObject.CreateInstance<Floor> ();
@@ -146,10 +146,14 @@ public class Main : MonoBehaviour {
 
 	public void setLootText(Movement m, Room[,] roomArray)
 	{
+		string lootinroom = "";
 		if (m.getCurrentRoom (roomArray).Items.Count == 0) {
 			lootText.text = "The room is empty.";
 		} else {
-			lootText.text = "The rooms contains: " + (m.getCurrentRoom (roomArray).Items [0].Name);
+			foreach (Item i in m.getCurrentRoom(roomArray).Items) {
+				lootinroom += i.name + ", ";
+			}
+			lootText.text = "In the room you find " + lootinroom;
 		}
 	}
 
@@ -167,11 +171,11 @@ public class Main : MonoBehaviour {
 			if (r.Items [0].GetType () == typeof(Equipment)) {
 				newEquipment = (Equipment)r.Items [0];
 				oldEquipment = p.addEquipment (newEquipment);
-				Debug.Log ("Returned equipment is: " + oldEquipment.itemName);
 				r.Items.RemoveAt (0);
-				r.Items.Add (oldEquipment);
+				if (oldEquipment != null) {
+					r.Items.Add (oldEquipment);
+				}
 				lootText.text = "You equip the " + (newEquipment.Name);
-				Debug.Log ("from when you pick something up. " + r.Items [0].itemName);
 			} else {
 				p.addItem (r.Items [0]);
 				lootText.text = "You pick up the " + (r.Items [0].itemName);

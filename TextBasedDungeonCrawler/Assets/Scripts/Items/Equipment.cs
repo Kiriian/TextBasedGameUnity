@@ -11,6 +11,9 @@ public class Equipment : Item {
 	public int manaMod;
 	//public StatusEffect activeEffect;
 
+	private int randomvalue;
+	private string[] materialNames = {"Leather","Hard Leather", "ChainMail", "Hide", "Imperial"};
+
 	public Equipment ()
 	{
 		
@@ -29,164 +32,133 @@ public class Equipment : Item {
 	}
 
 	[EquipmentModifier]
-	public void OffensiveGloves()
+	public void Gloves()
 	{
 		equipType = "gloves";
-		name = "Leather Gloves";
-		strengthMod = 3;
-		defenseMod = 0;
-		healthMod = 0;
+		name = materialNames.GetValue (Random.Range (0, materialNames.Length - 1)) + " Gloves";
+		int statPoints = Main.floorNumber/5+3;
+		int[] statArray = distributePoints (statPoints);
+		strengthMod = (int) statArray.GetValue (0);
+		defenseMod = (int) statArray.GetValue (1);
+		healthMod = (int) statArray.GetValue (2);
 	}
 
 	[EquipmentModifier]
-	public void DefensiveGloves()
-	{
-		equipType = "gloves";
-		name = "Chainmail Gloves";
-		strengthMod = 0;
-		defenseMod = 2;
-		healthMod = 1;
-	}
-
-	[EquipmentModifier]
-	public void MiddlingGloves()
-	{
-		equipType = "gloves";
-		name = "Hard Leather Gloves";
-		strengthMod = 1;
-		defenseMod = 1;
-		healthMod = 1;
-	}
-
-	[EquipmentModifier]
-	public void OffensiveBoots()
+	public void Boots()
 	{
 		equipType = "boots";
-		name = "Leather Boots";
-		strengthMod = 3;
-		defenseMod = 0;
-		healthMod = 0;
+		name = materialNames.GetValue (Random.Range (0, materialNames.Length - 1)) + " Boots";
+		int statPoints = Main.floorNumber/5+3;
+		int[] statArray = distributePoints (statPoints);
+		strengthMod = (int) statArray.GetValue (0);
+		defenseMod = (int) statArray.GetValue (1);
+		healthMod = (int) statArray.GetValue (2);
 	}
 
 	[EquipmentModifier]
-	public void DefensiveBoots()
-	{
-		equipType = "boots";
-		name = "Chainmail Boots";
-		strengthMod = 0;
-		defenseMod = 2;
-		healthMod = 1;
-	}
-
-	[EquipmentModifier]
-	public void MiddlingBoots()
-	{
-		equipType = "boots";
-		name = "Hard Leather Boots";
-		strengthMod = 1;
-		defenseMod = 1;
-		healthMod = 1;
-	}
-
-	[EquipmentModifier]
-	public void OffensiveHelmet()
+	public void Helmet()
 	{
 		equipType = "helmet";
-		name = "Leather Helmet";
-		strengthMod = 4;
-		defenseMod = 0;
-		healthMod = 0;
+		name = materialNames.GetValue (Random.Range (0, materialNames.Length - 1)) + " Helmet";
+		int statPoints = Main.floorNumber/5+3;
+		int[] statArray = distributePoints (statPoints);
+		strengthMod = (int) statArray.GetValue (0);
+		defenseMod = (int) statArray.GetValue (1);
+		healthMod = (int) statArray.GetValue (2);
 	}
 
 	[EquipmentModifier]
-	public void DefensiveHelmet()
-	{
-		equipType = "helmet";
-		name = "Chainmail Helmet";
-		strengthMod = 0;
-		defenseMod = 2;
-		healthMod = 2;
-	}
-
-	[EquipmentModifier]
-	public void MiddlingHelmet()
-	{
-		equipType = "helmet";
-		name = "Hard Leather Helmet";
-		strengthMod = 1;
-		defenseMod = 1;
-		healthMod = 2;
-	}
-
-	[EquipmentModifier]
-	public void OffensivePants()
+	public void Pants()
 	{
 		equipType = "pants";
-		name = "Leather Pants";
-		strengthMod = 3;
-		defenseMod = 0;
-		healthMod = 2;
+		name = materialNames.GetValue (Random.Range (0, materialNames.Length - 1)) + " Pants";
+		int statPoints = Main.floorNumber/5+4;
+		int[] statArray = distributePoints (statPoints);
+		strengthMod = (int) statArray.GetValue (0);
+		defenseMod = (int) statArray.GetValue (1);
+		healthMod = (int) statArray.GetValue (2);
 	}
 
 	[EquipmentModifier]
-	public void DefensivePants()
-	{
-		equipType = "pants";
-		name = "Chainmail Pants";
-		strengthMod = 0;
-		defenseMod = 3;
-		healthMod = 2;
-	}
-
-	[EquipmentModifier]
-	public void MiddlingPants()
-	{
-		equipType = "pants";
-		name = "Hard Leather Pants";
-		strengthMod = 2;
-		defenseMod = 1;
-		healthMod = 2;
-	}
-
-	[EquipmentModifier]
-	public void OffensiveChest()
+	public void Chest()
 	{
 		equipType = "chest";
-		name = "Leather Chest";
-		strengthMod = 4;
-		defenseMod = 0;
-		healthMod = 2;
+		name = materialNames.GetValue (Random.Range (0, materialNames.Length - 1)) + " Chest";
+		int statPoints = Main.floorNumber/5+5;
+		int[] statArray = distributePoints (statPoints);
+		strengthMod = (int) statArray.GetValue (0);
+		defenseMod = (int) statArray.GetValue (1);
+		healthMod = (int) statArray.GetValue (2);
 	}
 
-	[EquipmentModifier]
-	public void DefensiveChest()
+	private int RandomStatValue(int statpoints)
 	{
-		equipType = "chest";
-		name = "Chainmail Chest";
-		strengthMod = 0;
-		defenseMod = 4;
-		healthMod = 2;
+		int randomValue = Random.Range (0, statpoints);
+		return randomValue;
 	}
 
-	[EquipmentModifier]
-	public void MiddlingChest()
+	private int[] distributePoints(int statPoints)
 	{
-		equipType = "chest";
-		name = "Hard Leather Chest";
-		strengthMod = 2;
-		defenseMod = 2;
-		healthMod = 2;
+		int[] stats = new int[3];
+		for (int i = 0; i < 3; i++)
+		{
+			randomvalue = RandomStatValue (statPoints);
+			stats.SetValue(randomvalue,i);
+			statPoints = statPoints - randomvalue;
+		}
+		return stats;
 	}
 
 	[EquipmentModifier]
-	public void Sword()
+	public void SwordAndShield()
 	{
 		equipType = "weapon";
-		name = "Sword";
+		name = "Sword and Shield";
+		strengthMod = 3;
+		defenseMod = 3;
+		healthMod = 0;
+	}
+
+	[EquipmentModifier]
+	public void Axe()
+	{
+		equipType = "weapon";
+		name = "Sword and Shield";
 		strengthMod = 6;
 		defenseMod = 0;
 		healthMod = 0;
 	}
+
+	[EquipmentModifier]
+	public void TwoHandedSword()
+	{
+		equipType = "weapon";
+		name = "Two-handed Sword";
+		strengthMod = 4;
+		defenseMod = 2;
+		healthMod = 0;
+	}
+
+	[EquipmentModifier]
+	public void Dagger()
+	{
+		equipType = "weapon";
+		name = "Dagger";
+		strengthMod = 3;
+		defenseMod = 0;
+		healthMod = 0;
+	}
+
+	[EquipmentModifier]
+	public void Shiv()
+	{
+		equipType = "weapon";
+		name = "Shiv";
+		strengthMod = 2;
+		defenseMod = 0;
+		healthMod = 0;
+	}
+
 }
 
 public class EquipmentModifier : ConstructorSafeAttribute {

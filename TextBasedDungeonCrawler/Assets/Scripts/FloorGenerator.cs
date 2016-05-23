@@ -132,7 +132,7 @@ public class FloorGenerator : ScriptableObject
 			if (r != null) {
 				int rand = Random.Range (0, 15);
 
-				if (rand > 11) {
+				if (rand > 11 && r.RoomBoss == null) {
 					mon = ScriptableObject.CreateInstance<Monster> ();
 					rand = Random.Range (1, 4);
 					switch (rand) {

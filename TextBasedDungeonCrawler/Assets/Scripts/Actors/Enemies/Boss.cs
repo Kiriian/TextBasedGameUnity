@@ -13,24 +13,28 @@ public class Boss : Enemy {
 
 	public void Golem(){
 		actorName = "Golem";
-		maxHealth = 50;
-		currentHealth = 50;
+		maxHealth = Mathf.Clamp(50 * Main.floorNumber/5, 50, 10000);
+		currentHealth = 30;
 		maxMana = 0;
 		currentMana = 0;
 		chanceToHit = 8;
-		strength = 5;
-		defense = 6;
+		Mathf.Clamp(7 * Main.floorNumber/5, 7, 10000);
+		Mathf.Clamp(8 * Main.floorNumber/5, 8, 10000);
+		droprate = 100;
+		itemRarity = 100;
 	}
 
 	public void ScaryGhost(){
-		actorName = "TestBoss";
-		maxHealth = 25;
+		actorName = "Ghost";
+		maxHealth = Mathf.Clamp(30 * Main.floorNumber/5, 30, 10000);
 		currentHealth = 25;
 		maxMana = 0;
 		currentMana = 0;
 		chanceToHit = 10;
-		strength = 4;
-		defense = 8;
+		strength = Mathf.Clamp(11 * Main.floorNumber/5, 11, 10000);
+		defense = Mathf.Clamp(6 * Main.floorNumber/5, 6, 10000);
+		droprate = 100;
+		itemRarity = 100;
 	}
 
 }

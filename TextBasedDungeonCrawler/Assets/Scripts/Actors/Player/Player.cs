@@ -38,7 +38,7 @@ public class Player : Actor {
 		equipment = ScriptableObject.CreateInstance<PlayerEquipment> ();
 
 		Equipment testSword = ScriptableObject.CreateInstance<Equipment>();
-		testSword.setAttributes ("Test Sword", "weapon", 2, 0, 0, 0);
+		testSword.Shiv ();
 		equipment.equip (this,testSword);
 
 	}

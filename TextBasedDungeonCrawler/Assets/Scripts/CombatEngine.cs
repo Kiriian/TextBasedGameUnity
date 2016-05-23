@@ -17,7 +17,6 @@ public class CombatEngine : ScriptableObject {
 				roomArr [x, y].RoomMonster = null;
 				e = mon.drops (mon.droprate, mon.itemRarity);
 				if (e != null) {
-					Debug.Log ("item monster dropped " + e.equipType);
 					roomArr [x, y].Items.Add (e);
 					return "You hurt the " + mon.actorName + " for " + monDamage + " damage. It dies and drops " + e.Name + ".";
 				}
