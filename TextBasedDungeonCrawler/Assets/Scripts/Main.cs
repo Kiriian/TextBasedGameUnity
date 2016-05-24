@@ -13,6 +13,8 @@ public class Main : MonoBehaviour {
 	private Room r;
 	private ButtonClicked bt;
 	private Map map;
+	private int currentX;
+	private int currentY;
 
 	public static int floorNumber;
 
@@ -58,39 +60,57 @@ public class Main : MonoBehaviour {
 
 		if (Input.GetKeyDown (KeyCode.DownArrow)) {
 			if (r.checkForMonster(r) == null) {
+				currentX = m.x;
+				currentY = m.y;
 				r = m.MoveSouth (roomArray2d);
 				setMoveText (r);
+				map.SetPlayerMapPos (currentX,currentY,m.x,m.y);
 			} else if (r.checkForMonster(r) != null) {
 				int number = UnityEngine.Random.Range (1, 10);
 				if (number >= 8) {
+					currentX = m.x;
+					currentY = m.y;
 					r = m.MoveSouth (roomArray2d);
 					setMoveText (r);
+					map.SetPlayerMapPos (currentX,currentY,m.x,m.y);
 				} else {
 					EscapeMonster (r);
 				}
 			}
 		} else if (Input.GetKeyDown (KeyCode.UpArrow)) {
 			if (r.checkForMonster(r) == null) {
+				currentX = m.x;
+				currentY = m.y;
 				r = m.MoveNorth (roomArray2d);
 				setMoveText (r);
+				map.SetPlayerMapPos (currentX,currentY,m.x,m.y);
 			} else if (r.checkForMonster(r) != null) {
 				int number = UnityEngine.Random.Range (1, 10);
 				if (number >= 8) {
+					currentX = m.x;
+					currentY = m.y;
 					r = m.MoveNorth (roomArray2d);
 					setMoveText (r);
+					map.SetPlayerMapPos (currentX,currentY,m.x,m.y);
 				} else {
 					EscapeMonster (r);
 				}
 			}
 		} else if (Input.GetKeyDown (KeyCode.RightArrow)) {
 			if (r.checkForMonster(r) == null) {
+				currentX = m.x;
+				currentY = m.y;
 				r = m.MoveEast (roomArray2d);
 				setMoveText (r);
+				map.SetPlayerMapPos (currentX,currentY,m.x,m.y);
 			} else if (r.checkForMonster(r) != null) {
 				int number = UnityEngine.Random.Range (1, 10);
 				if (number >= 8) {
+					currentX = m.x;
+					currentY = m.y;
 					r = m.MoveEast (roomArray2d);
 					setMoveText (r);
+					map.SetPlayerMapPos (currentX,currentY,m.x,m.y);
 				} else {
 					EscapeMonster (r);
 				}

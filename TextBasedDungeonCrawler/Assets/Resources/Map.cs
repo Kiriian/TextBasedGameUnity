@@ -70,11 +70,21 @@ public class Map : ScriptableObject {
 
 	public void SetPlayerMapPos(int x, int y, int nextX, int nextY){
 
-		//		GameObject tile = GameObject.Find ("tile_"+x+","+y);
-		//GameObject newTile = GameObject.Find ("tile_" + nextX + "," + nextY);
-		//		tile.GetComponent<Renderer> ().material = Resources.Load ("grass");
+		GameObject smilePrefab = Resources.Load("tile_2") as GameObject;
+		GameObject greenPrefab = Resources.Load ("tile_0") as GameObject;
 
-		//newTile.GetComponent<Renderer>().material = (Material)Resources.Load ("brick", typeof(Material));
+		GameObject tile = GameObject.Find ("tile_"+x+","+y);
+		GameObject newTile = GameObject.Find ("tile_" + nextX + "," + nextY);
+		Texture tex2D = (Texture)Resources.Load ("smile_icon");
+		Vector3 tileVec = tile.transform.localPosition;
+		Vector3 nextTileVec = newTile.transform.localPosition;
+
+		Destroy (newTile);
+		GameObject tile1 = Instantiate (smilePrefab, Vector3.zero, Quaternion.identity) as GameObject;
+		tile1.name = "tile_" + x + "," + y;
+		tile1.transform.SetParent (GameObject.Find("PlayerInfoBackground").transform);
+		tile1.transform.localPosition = nextTileVec;
+		tile1.tag = "maptile";
 	}
 
 }
