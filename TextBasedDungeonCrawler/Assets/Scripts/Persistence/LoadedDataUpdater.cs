@@ -30,7 +30,7 @@ public class LoadedDataUpdater {
 			xCoordinate = m.xCoordinate,
 			yCoordinate = m.YCoordinate
 		};
-			return md;
+		return md;
 	}
 
 	public Room[,] LoadFloor(FloorDat fd){
@@ -71,19 +71,19 @@ public class LoadedDataUpdater {
 					}
 					if (r[i,j].roomBoss!=null){
 						roomBoss = new Boss {
-							actorName = r [i, j].roomMonster.actorName,
-							maxHealth = r [i, j].roomMonster.maxHealth,
-							currentHealth = r [i, j].roomMonster.currentHealth,
-							maxMana = r [i, j].roomMonster.maxMana,
-							currentMana = r [i, j].roomMonster.currentMana,
-							strength = r [i, j].roomMonster.strength,
-							defense = r [i, j].roomMonster.defense,
-							chanceToDodge = r [i, j].roomMonster.chanceToDodge,
-							chanceToHit = r [i, j].roomMonster.chanceToHit,
-							lootTable = GenerateMonsterItemLootTab (r [i, j].roomMonster),
-							heldLoot = GenerateMonsterItemHeldLoot (r [i, j].roomMonster),
-							droprate = r [i, j].roomMonster.droprate,
-							itemRarity = r [i, j].roomMonster.itemRarity
+							actorName = r [i, j].roomBoss.actorName,
+							maxHealth = r [i, j].roomBoss.maxHealth,
+							currentHealth = r [i, j].roomBoss.currentHealth,
+							maxMana = r [i, j].roomBoss.maxMana,
+							currentMana = r [i, j].roomBoss.currentMana,
+							strength = r [i, j].roomBoss.strength,
+							defense = r [i, j].roomBoss.defense,
+							chanceToDodge = r [i, j].roomBoss.chanceToDodge,
+							chanceToHit = r [i, j].roomBoss.chanceToHit,
+							lootTable = GenerateBossItemLootTab (r [i, j].roomBoss),
+							heldLoot = GenerateBossItemHeldLoot (r [i, j].roomBoss),
+							droprate = r [i, j].roomBoss.droprate,
+							itemRarity = r [i, j].roomBoss.itemRarity
 
 						};
 					} else {
@@ -220,6 +220,34 @@ public class LoadedDataUpdater {
 		return itemDats;
 	}
 
+	public List<Item> GenerateBossItemHeldLoot (BossDat b){
+		List<ItemDat> items = (List<ItemDat>)b.heldLoot;
+		List<Item> itemDats = new List<Item> ();
+		foreach (var item in items) {
+			Item dat = new Item ();
+			dat.itemName = item.itemName;
+			dat.carryLimit = item.carryLimit;
+			dat.heldQuantity = item.heldQuantity;
+			itemDats.Add (dat);
+		}
+
+		return itemDats;
+	}
+
+	public List<Item> GenerateBossItemLootTab (BossDat b){
+		List<ItemDat> items = (List<ItemDat>)b.lootTable;
+		List<Item> itemDats = new List<Item> ();
+		foreach (var item in items) {
+			Item dat = new Item ();
+			dat.itemName = item.itemName;
+			dat.carryLimit = item.carryLimit;
+			dat.heldQuantity = item.heldQuantity;
+			itemDats.Add (dat);
+		}
+
+		return itemDats;
+	}
+
 	public List<Item> GenerateRoomItemDatColl (RoomDat r){
 		List<ItemDat> items = (List<ItemDat>)r.items;
 		List<Item> itemDats = new List<Item> ();
@@ -243,4 +271,4 @@ public class LoadedDataUpdater {
 		}
 		return dirDats;
 	}
-}
+} 

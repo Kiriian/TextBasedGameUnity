@@ -18,8 +18,8 @@ public class Boss : Enemy {
 		maxMana = 0;
 		currentMana = 0;
 		chanceToHit = 8;
-		Mathf.Clamp(7 * Main.floorNumber/5, 7, 10000);
-		Mathf.Clamp(8 * Main.floorNumber/5, 8, 10000);
+		strength = Mathf.Clamp(7 * Main.floorNumber/5, 7, 10000);
+		defense = Mathf.Clamp(5 * Main.floorNumber/5, 5, 10000); 
 		droprate = 100;
 		itemRarity = 100;
 	}

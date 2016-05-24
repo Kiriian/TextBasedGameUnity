@@ -24,12 +24,12 @@ public class SessionData
 
 	public SessionData ()
 	{
-		
+
 	}
-		
+
 	public SessionData (Room[,] roomArray2d, Movement m, Player p)
 	{
-			this.p = new PlayerDat {
+		this.p = new PlayerDat {
 			actorName = p.actorName,
 			maxHealth = p.maxHealth,
 			currentHealth = p.currentHealth,
@@ -68,7 +68,6 @@ public class SessionData
 					roomDatArray [i, j] = null;
 				} else {
 					MonsterDat roomMon = new MonsterDat ();
-					BossDat roomBoss = new BossDat ();
 					if (r[i,j].RoomMonster!=null){
 						roomMon = new MonsterDat {
 							actorName = r [i, j].RoomMonster.actorName,
@@ -89,22 +88,22 @@ public class SessionData
 					} else {
 						roomMon = null;
 					}
+					BossDat roomBoss = new BossDat ();
 					if (r[i,j].RoomBoss!=null){
 						roomBoss = new BossDat {
-							actorName = r [i, j].RoomMonster.actorName,
-							maxHealth = r [i, j].RoomMonster.maxHealth,
-							currentHealth = r [i, j].RoomMonster.currentHealth,
-							maxMana = r [i, j].RoomMonster.maxMana,
-							currentMana = r [i, j].RoomMonster.currentMana,
-							strength = r [i, j].RoomMonster.strength,
-							defense = r [i, j].RoomMonster.defense,
-							chanceToDodge = r [i, j].RoomMonster.chanceToDodge,
-							chanceToHit = r [i, j].RoomMonster.chanceToHit,
-							lootTable = GenerateMonsterItemLootTab (r [i, j].RoomMonster),
-							heldLoot = GenerateMonsterItemHeldLoot (r [i, j].RoomMonster),
-							droprate = r [i, j].RoomMonster.droprate,
-							itemRarity = r [i, j].RoomMonster.itemRarity
-
+							actorName = r [i, j].RoomBoss.actorName,
+							maxHealth = r [i, j].RoomBoss.maxHealth,
+							currentHealth = r [i, j].RoomBoss.currentHealth,
+							maxMana = r [i, j].RoomBoss.maxMana,
+							currentMana = r [i, j].RoomBoss.currentMana,
+							strength = r [i, j].RoomBoss.strength,
+							defense = r [i, j].RoomBoss.defense,
+							chanceToDodge = r [i, j].RoomBoss.chanceToDodge,
+							chanceToHit = r [i, j].RoomBoss.chanceToHit,
+							lootTable = GenerateBossItemLootTab (r [i, j].RoomBoss),
+							heldLoot =  GenerateBossItemHeldLoot(r [i, j].RoomBoss),
+							droprate = r [i, j].RoomBoss.droprate,
+							itemRarity = r [i, j].RoomBoss.itemRarity
 						};
 					} else {
 						roomBoss = null;
@@ -208,7 +207,7 @@ public class SessionData
 			dat.heldQuantity = item.heldQuantity;
 			itemDats.Add (dat);
 		}
-	
+
 		return itemDats;
 	}
 
@@ -250,6 +249,34 @@ public class SessionData
 			dat.heldQuantity = item.heldQuantity;
 			itemDats.Add (dat);
 		}
+		return itemDats;
+	}
+
+	public List<ItemDat> GenerateBossItemHeldLoot (Boss b){
+		List<Item> items = (List<Item>)b.HeldLoot;
+		List<ItemDat> itemDats = new List<ItemDat> ();
+		foreach (var item in items) {
+			ItemDat dat = new ItemDat ();
+			dat.itemName = item.itemName;
+			dat.carryLimit = item.carryLimit;
+			dat.heldQuantity = item.heldQuantity;
+			itemDats.Add (dat);
+		}
+
+		return itemDats;
+	}
+
+	public List<ItemDat> GenerateBossItemLootTab (Boss b){
+		List<Item> items = (List<Item>)b.LootTable;
+		List<ItemDat> itemDats = new List<ItemDat> ();
+		foreach (var item in items) {
+			ItemDat dat = new ItemDat ();
+			dat.itemName = item.itemName;
+			dat.carryLimit = item.carryLimit;
+			dat.heldQuantity = item.heldQuantity;
+			itemDats.Add (dat);
+		}
+
 		return itemDats;
 	}
 
@@ -327,7 +354,7 @@ public class MovementDat{
 	public int yAxis;
 	public int xCoordinate;
 	public int YCoordinate;
-	
+
 }
 
 [Serializable]
@@ -355,7 +382,7 @@ public class RoomDat{
 public class DirectionDat{
 
 	public string directionName;
-	
+
 }
 
 [Serializable]
@@ -393,5 +420,4 @@ public class BossDat{
 	public ICollection<ItemDat> heldLoot = new List<ItemDat>();
 	public int droprate;
 	public int itemRarity;
-
-}
+} 

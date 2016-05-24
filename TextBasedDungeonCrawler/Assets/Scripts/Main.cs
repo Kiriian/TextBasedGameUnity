@@ -136,148 +136,165 @@ public class Main : MonoBehaviour {
 		} else if (Input.GetKeyDown (KeyCode.Q)) {
 			setUseHealingPotionText (p);
 		} else if (Input.GetKeyDown (KeyCode.V)) {
-			SaveGame sg = new SaveGame ();
-			SessionData sd = new SessionData (roomArray2d, m, p);
-			sg.Save (sd);
+			SaveGame ();
 		} else if (Input.GetKeyDown (KeyCode.B)) {
-			LoadGame lg = new LoadGame ();
- 		    SessionData sd = lg.Load ();
-			LoadGameFromSessionData (sd);
+			LoadGame ();
 		}
-
 	}
 
-	public void ScreenButtonPressed (int buttonID){
-		bt = ScriptableObject.CreateInstance<ButtonClicked> ();
+public void SaveGame()
+{
+	SaveGame sg = new SaveGame ();
+	SessionData sd = new SessionData (roomArray2d, m, p);
+	sg.Save (sd);
+}
 
-		bt.CheckButtonPressed (roomArray2d, m, this, buttonID, ce, p, map);
-	
+public void LoadGame()
+{
+	LoadGame lg = new LoadGame ();
+	SessionData sd = lg.Load ();
+	LoadGameFromSessionData (sd);
+	floorNumber--;
+}
+
+public void ScreenButtonPressed (int buttonID){
+	bt = ScriptableObject.CreateInstance<ButtonClicked> ();
+
+	bt.CheckButtonPressed (roomArray2d, m, this, buttonID, ce, p, map);
+
+}
+
+public void setMoveText(Room r)
+{
+	lootText.text = "";
+	movementText.text = m.Options (r);
+	combatText.text = r.checkForMonster (r);
+	if (r.EntranceToNextFloor == true) {
+		roomDescriptionText.text = r.Description + "There are stairs leading further down";
+	} else {
+		roomDescriptionText.text = r.Description;
 	}
 
-	public void setMoveText(Room r)
-	{
-		lootText.text = "";
-		movementText.text = m.Options (r);
-		combatText.text = r.checkForMonster (r);
-		if (r.EntranceToNextFloor == true) {
-			roomDescriptionText.text = r.Description + "There are stairs leading further down";
-		} else {
-			roomDescriptionText.text = r.Description;
-		}
+}
 
-	}
-
-	public void setLootText(Movement m, Room[,] roomArray)
-	{
-		string lootinroom = "";
-		if (m.getCurrentRoom (roomArray).Items.Count == 0) {
-			lootText.text = "The room is empty.";
-		} else {
-			foreach (Item i in m.getCurrentRoom(roomArray).Items) {
+public void setLootText(Movement m, Room[,] roomArray)
+{
+	string lootinroom = "";
+	if (m.getCurrentRoom (roomArray).Items.Count == 0) {
+		lootText.text = "There is nothing of use in the room.";
+	} else {
+		foreach (Item i in m.getCurrentRoom(roomArray).Items) {
+			if (i != null) {
 				lootinroom += i.name + ", ";
 			}
+		}
+		if (lootinroom.Equals (", ")) {
+			lootText.text = "There is nothing of use in the room.";
+		} else {
 			lootText.text = "In the room you find " + lootinroom;
 		}
 	}
+}
 
-	public void setAttackCombatText (CombatEngine ce, Room[,] roomArray, Player p, Movement m)
-	{
-		combatText.text = ce.Attack (p, roomArray, m.xCoordinate, m.yCoordinate);	
-	}
+public void setAttackCombatText (CombatEngine ce, Room[,] roomArray, Player p, Movement m)
+{
+	combatText.text = ce.Attack (p, roomArray, m.xCoordinate, m.yCoordinate);    
+}
 
-	public void setPickUpLootText(Movement m, Player p, Room r)
-	{
-		Equipment newEquipment;
-		Equipment oldEquipment;
+public void setPickUpLootText(Movement m, Player p, Room r)
+{
+	Equipment newEquipment;
+	Equipment oldEquipment;
 
-		if (r.Items.Count != 0) {
-			if (r.Items [0].GetType () == typeof(Equipment)) {
-				newEquipment = (Equipment)r.Items [0];
-				oldEquipment = p.addEquipment (newEquipment);
-				r.Items.RemoveAt (0);
-				if (oldEquipment != null) {
-					r.Items.Add (oldEquipment);
-				}
-				lootText.text = "You equip the " + (newEquipment.Name);
-			} else {
-				p.addItem (r.Items [0]);
-				lootText.text = "You pick up the " + (r.Items [0].itemName);
-				r.Items.RemoveAt (0);
+	if (r.Items.Count != 0) {
+		if (r.Items [0].GetType () == typeof(Equipment)) {
+			newEquipment = (Equipment)r.Items [0];
+			oldEquipment = p.addEquipment (newEquipment);
+			r.Items.RemoveAt(0);
+			if (oldEquipment != null) {
+				r.Items.Add (oldEquipment);
 			}
+			lootText.text = "You equip the " + (newEquipment.Name);
 		} else {
-			lootText.text = "There is nothing to pick up";
+			p.addItem (r.Items [0]);
+			lootText.text = "You pick up the " + (r.Items [0].itemName);
+			r.Items.RemoveAt (0);
 		}
+	} else {
+		lootText.text = "There is nothing to pick up";
 	}
+}
 
-	public void setInventoryText (Player p)
-	{
-		string items = p.GiveHeldItems ();
-		lootText.text = items;
+public void setInventoryText (Player p)
+{
+	string items = p.GiveHeldItems ();
+	lootText.text = items;
+}
+
+public void setDodgeCombatText(CombatEngine ce, Room[,] roomArray, Player p, Movement m)
+{
+	combatText.text = ce.Dodge (p, roomArray2d, m.xCoordinate, m.yCoordinate);
+}
+
+public void setUseHealingPotionText(Player p)
+{
+	HealingPotion pot = p.getHealingPotion();
+	if (pot != null) {
+		lootText.text = pot.drink (p);
+		p.removeItem (pot);
+	} else {
+		lootText.text = "You have no healing potions";
 	}
+}
 
-	public void setDodgeCombatText(CombatEngine ce, Room[,] roomArray, Player p, Movement m)
-	{
-		combatText.text = ce.Dodge (p, roomArray2d, m.xCoordinate, m.yCoordinate);
-	}
-
-	public void setUseHealingPotionText(Player p)
-	{
-		HealingPotion pot = p.getHealingPotion();
-		if (pot != null) {
-			lootText.text = pot.drink (p);
-			p.removeItem (pot);
-		} else {
-			lootText.text = "You have no healing potions";
+public void EscapeMonster (Room r)
+{
+	if (r.RoomMonster != null) {
+		Monster mon = r.RoomMonster;
+		int playerDamage = p.hurt (mon.strength - p.defense);
+		if (p.currentHealth<=0) {
+			Application.LoadLevel (2);
 		}
+		combatText.text = "You tried to escape, the " + mon.actorName + " hurts you for " + playerDamage;
 	}
-
-	public void EscapeMonster (Room r)
-	{
-		if (r.RoomMonster != null) {
-			Monster mon = r.RoomMonster;
-			int playerDamage = p.hurt (mon.strength - p.defense);
-			if (p.currentHealth<=0) {
-				Application.LoadLevel (2);
-			}
-			combatText.text = "You tried to escape, the Monster hurts you for " + playerDamage;
+	else if (r.RoomBoss != null) {
+		Boss boss = r.RoomBoss;
+		int playerDamage = p.hurt (boss.strength - p.defense);
+		if (p.currentHealth<=0) {
+			Application.LoadLevel (2);
 		}
-		else if (r.RoomBoss != null) {
-			Boss boss = r.RoomBoss;
-			int playerDamage = p.hurt (boss.strength - p.defense);
-			if (p.currentHealth<=0) {
-				Application.LoadLevel (2);
-			}
-			combatText.text = "You tried to escape, the Monster hurts you for " + playerDamage;
-		}
+		combatText.text = "You tried to escape, the " + boss.actorName + " hurts you for " + playerDamage;
 	}
+}
 
-	public void LoadGameFromSessionData (SessionData sd){
+public void LoadGameFromSessionData (SessionData sd){
 
-		LoadedDataUpdater ldu = new LoadedDataUpdater ();
-		p = ldu.LoadPlayer (sd.p);
-		m = ldu.LoadMovement (sd.m);
-		roomArray2d = ldu.LoadFloor (sd.roomArray2d);
-		map.ClearMap ();
+	LoadedDataUpdater ldu = new LoadedDataUpdater ();
+	p = ldu.LoadPlayer (sd.p);
+	m = ldu.LoadMovement (sd.m);
+	roomArray2d = ldu.LoadFloor (sd.roomArray2d);
+	map.ClearMap ();
+	map.CreateMap (roomArray2d);
+
+}
+
+
+public void MoveNextFloor(Room r, Map map, Movement m)
+{
+	if (r.checkForMonster (r) == null) {
+		roomArray2d = f.Floor1 (m);
+		floorNumber++;
 		map.CreateMap (roomArray2d);
-
-	}
-
-
-	public void MoveNextFloor(Room r, Map map, Movement m)
-	{
-		if (r.checkForMonster (r) == null) {
-			roomArray2d = f.Floor1 (m);
-			floorNumber++;
-			map.CreateMap (roomArray2d);
-			setMoveText (r);
-		} else if (r.checkForMonster (r) != null) {
-			int number = Random.Range (1, 10);
-			if (number >= 9) {
-				setMoveText (m.getCurrentRoom (roomArray2d));
-			} else {
-				EscapeMonster (r);
-			}
+		setMoveText (r);
+	} else if (r.checkForMonster (r) != null) {
+		int number = Random.Range (1, 10);
+		if (number >= 9) {
+			setMoveText (m.getCurrentRoom (roomArray2d));
+		} else {
+			EscapeMonster (r);
 		}
 	}
 }
+} 
+
 	

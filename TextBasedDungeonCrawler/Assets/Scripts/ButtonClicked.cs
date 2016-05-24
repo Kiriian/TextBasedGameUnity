@@ -44,6 +44,12 @@ public class ButtonClicked : ScriptableObject {
 		case 10:
 			main.setUseHealingPotionText (p);
 			break;
+		case 11:
+			main.SaveGame ();
+			break;
+		case 12:
+			main.LoadGame ();
+			break;
 		}
 	}
 
