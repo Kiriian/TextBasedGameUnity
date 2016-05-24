@@ -13,8 +13,8 @@ public class Main : MonoBehaviour {
 	private Room r;
 	private ButtonClicked bt;
 	private Map map;
-	private int currentX;
-	private int currentY;
+	public int currentX;
+	public int currentY;
 
 	public static int floorNumber;
 
@@ -116,8 +116,11 @@ public class Main : MonoBehaviour {
 				}
 			}
 		} else if (Input.GetKeyDown (KeyCode.LeftArrow)) {
+			currentX = m.x;
+			currentY = m.y;
 			r = m.MoveWest (roomArray2d);
 			setMoveText (r);
+			map.SetPlayerMapPos (currentX,currentY,m.x,m.y);
 		} else if (Input.GetKeyDown (KeyCode.I)) {
 			setLootText (m, roomArray2d);
 		} else if (Input.GetKeyDown (KeyCode.Space) && m.getCurrentRoom (roomArray2d).EntranceToNextFloor == true) {
