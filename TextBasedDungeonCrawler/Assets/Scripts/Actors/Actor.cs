@@ -11,6 +11,7 @@ public class Actor : ScriptableObject {
 	public int maxMana;
 	public int currentMana;
 	public int strength;
+	public int intellengence;
 	public int defense;
 	public int chanceToDodge;
 	public int chanceToHit;

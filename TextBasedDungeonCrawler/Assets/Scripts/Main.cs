@@ -52,8 +52,8 @@ public class Main : MonoBehaviour {
 
 	void Update ()
 	{
-		health.text = "Health:\t" + p.maxHealth+ "/"+ p.currentHealth;
-		mana.text = "Mana:\t" + p.maxMana + "/" + p.currentMana;
+		health.text = "Health:\t" + p.currentHealth + "/"+ p.maxHealth;
+		mana.text = "Mana:\t" + p.currentMana + "/" + p.maxMana;
 		defense.text = "Defense:\t" + p.defense;
 		strength.text = "Strength:\t" + p.strength;
 		floorNumberText.text = "F" + floorNumber;
@@ -67,7 +67,7 @@ public class Main : MonoBehaviour {
 				map.SetPlayerMapPos (currentX,currentY,m.x,m.y);
 			} else if (r.checkForMonster(r) != null) {
 				int number = UnityEngine.Random.Range (1, 10);
-				if (number >= 8) {
+				if (number >= 9) {
 					currentX = m.x;
 					currentY = m.y;
 					r = m.MoveSouth (roomArray2d);
@@ -86,7 +86,7 @@ public class Main : MonoBehaviour {
 				map.SetPlayerMapPos (currentX,currentY,m.x,m.y);
 			} else if (r.checkForMonster(r) != null) {
 				int number = UnityEngine.Random.Range (1, 10);
-				if (number >= 8) {
+				if (number >= 9) {
 					currentX = m.x;
 					currentY = m.y;
 					r = m.MoveNorth (roomArray2d);
@@ -105,7 +105,7 @@ public class Main : MonoBehaviour {
 				map.SetPlayerMapPos (currentX,currentY,m.x,m.y);
 			} else if (r.checkForMonster(r) != null) {
 				int number = UnityEngine.Random.Range (1, 10);
-				if (number >= 8) {
+				if (number >= 9) {
 					currentX = m.x;
 					currentY = m.y;
 					r = m.MoveEast (roomArray2d);
@@ -115,12 +115,24 @@ public class Main : MonoBehaviour {
 					EscapeMonster (r);
 				}
 			}
-		} else if (Input.GetKeyDown (KeyCode.LeftArrow)) {
-			currentX = m.x;
-			currentY = m.y;
-			r = m.MoveWest (roomArray2d);
-			setMoveText (r);
-			map.SetPlayerMapPos (currentX,currentY,m.x,m.y);
+		} else if (Input.GetKeyDown (KeyCode.LeftArrow)) {if (r.checkForMonster(r) == null) {
+				currentX = m.x;
+				currentY = m.y;
+				r = m.MoveWest (roomArray2d);
+				setMoveText (r);
+				map.SetPlayerMapPos (currentX,currentY,m.x,m.y);
+		} else if (r.checkForMonster(r) != null) {
+			int number = UnityEngine.Random.Range (1, 10);
+			if (number >= 9) {
+				currentX = m.x;
+				currentY = m.y;
+				r = m.MoveWest (roomArray2d);
+				setMoveText (r);
+				map.SetPlayerMapPos (currentX,currentY,m.x,m.y);
+			} else {
+				EscapeMonster (r);
+			}
+		};
 		} else if (Input.GetKeyDown (KeyCode.I)) {
 			setLootText (m, roomArray2d);
 		} else if (Input.GetKeyDown (KeyCode.Space) && m.getCurrentRoom (roomArray2d).EntranceToNextFloor == true) {
@@ -130,7 +142,7 @@ public class Main : MonoBehaviour {
 		} else if (Input.GetKeyDown (KeyCode.P)) {
 			setPickUpLootText (m, p, r);
 		} else if (Input.GetKeyDown (KeyCode.M)) {
-			setInventoryText (p);
+			setInventoryText (p, r);
 		} else if (Input.GetKeyDown (KeyCode.D)) {
 			setDodgeCombatText (ce, roomArray2d, p, m);
 		} else if (Input.GetKeyDown (KeyCode.Q)) {
@@ -180,20 +192,36 @@ public void setMoveText(Room r)
 public void setLootText(Movement m, Room[,] roomArray)
 {
 	string lootinroom = "";
-	if (m.getCurrentRoom (roomArray).Items.Count == 0) {
-		lootText.text = "There is nothing of use in the room.";
-	} else {
-		foreach (Item i in m.getCurrentRoom(roomArray).Items) {
-			if (i != null) {
-				lootinroom += i.name + ", ";
+		if (m.getCurrentRoom (roomArray).RoomBoss == null && m.getCurrentRoom (roomArray).RoomMonster == null) {
+			if (m.getCurrentRoom (roomArray).Items.Count == 0) {
+				lootText.text = "There is nothing of use in the room.";
+			} else {
+				foreach (Item i in m.getCurrentRoom(roomArray).Items) {
+					if (i != null) {
+						lootinroom += i.name + ", ";
+					}
+				}
+				if (lootinroom.Equals (", ")) {
+					lootText.text = "There is nothing of use in the room.";
+				} else {
+					lootText.text = "In the room you find " + lootinroom;
+				}
 			}
+		} else if (m.getCurrentRoom (roomArray).RoomBoss != null) {
+			Boss b = m.getCurrentRoom (roomArray).RoomBoss;
+			int playerDamage = p.hurt (Mathf.Clamp(b.strength - p.defense,1,100000));
+			if (p.currentHealth <= 0) {
+				Application.LoadLevel (2);
+			}
+			combatText.text = "The monster attacks and damages you for " + playerDamage + ", while you are distracted.";
+		} else if (m.getCurrentRoom (roomArray).RoomMonster != null) {
+			Monster mon = m.getCurrentRoom (roomArray).RoomMonster;
+			int playerDamage = p.hurt (Mathf.Clamp(mon.strength - p.defense,1,100000));
+			if (p.currentHealth <= 0) {
+				Application.LoadLevel (2);
+			}
+			combatText.text = "The monster attacks and damages you for " + playerDamage + ", while you are distracted.";
 		}
-		if (lootinroom.Equals (", ")) {
-			lootText.text = "There is nothing of use in the room.";
-		} else {
-			lootText.text = "In the room you find " + lootinroom;
-		}
-	}
 }
 
 public void setAttackCombatText (CombatEngine ce, Room[,] roomArray, Player p, Movement m)
@@ -205,30 +233,63 @@ public void setPickUpLootText(Movement m, Player p, Room r)
 {
 	Equipment newEquipment;
 	Equipment oldEquipment;
-
-	if (r.Items.Count != 0) {
-		if (r.Items [0].GetType () == typeof(Equipment)) {
-			newEquipment = (Equipment)r.Items [0];
-			oldEquipment = p.addEquipment (newEquipment);
-			r.Items.RemoveAt(0);
-			if (oldEquipment != null) {
-				r.Items.Add (oldEquipment);
+	
+		if (r.RoomMonster == null && r.RoomBoss == null) {
+			if (r.Items.Count != 0) {
+				if (r.Items [0].GetType () == typeof(Equipment)) {
+					newEquipment = (Equipment)r.Items [0];
+					oldEquipment = p.addEquipment (newEquipment);
+					r.Items.RemoveAt (0);
+					if (oldEquipment != null) {
+						r.Items.Add (oldEquipment);
+					}
+					lootText.text = "You equip the " + (newEquipment.Name);
+				} else {
+					p.addItem (r.Items [0]);
+					lootText.text = "You pick up the " + (r.Items [0].itemName);
+					r.Items.RemoveAt (0);
+				}
+			} else {
+				lootText.text = "There is nothing to pick up";
 			}
-			lootText.text = "You equip the " + (newEquipment.Name);
-		} else {
-			p.addItem (r.Items [0]);
-			lootText.text = "You pick up the " + (r.Items [0].itemName);
-			r.Items.RemoveAt (0);
+		}  else if (r.RoomBoss != null) {
+			Boss b = r.RoomBoss;
+			int playerDamage = p.hurt (Mathf.Clamp(b.strength - p.defense,1,100000));
+			if (p.currentHealth <= 0) {
+				Application.LoadLevel (2);
+			}
+			combatText.text = "The monster attacks and damages you for " + playerDamage + ", while you are distracted.";
+		} else if (r.RoomMonster != null) {
+			Monster mon = r.RoomMonster;
+			int playerDamage = p.hurt (Mathf.Clamp(mon.strength - p.defense,1,100000));
+			if (p.currentHealth <= 0) {
+				Application.LoadLevel (2);
+			}
+			combatText.text = "The monster attacks and damages you for " + playerDamage + ", while you are distracted.";
 		}
-	} else {
-		lootText.text = "There is nothing to pick up";
-	}
 }
 
-public void setInventoryText (Player p)
+	public void setInventoryText (Player p, Room r)
 {
-	string items = p.GiveHeldItems ();
-	lootText.text = items;
+		if (r.RoomBoss == null && r.RoomMonster == null) {
+			string items = p.GiveHeldItems ();
+			lootText.text = items;
+		} else if (r.RoomBoss != null) {
+			Boss b = r.RoomBoss;
+			int playerDamage = p.hurt (Mathf.Clamp(b.strength - p.defense,1,100000));
+			if (p.currentHealth <= 0) {
+				Application.LoadLevel (2);
+			}
+			combatText.text = "The monster attacks and damages you for " + playerDamage + ", while you are distracted.";	
+		} else if (r.RoomMonster != null) {
+			Monster mon = r.RoomMonster;
+			int playerDamage = p.hurt (Mathf.Clamp(mon.strength - p.defense,1,100000));
+			if (p.currentHealth <= 0) {
+				Application.LoadLevel (2);
+			}
+			combatText.text = "The monster attacks and damages you for " + playerDamage + ", while you are distracted.";
+		}
+	
 }
 
 public void setDodgeCombatText(CombatEngine ce, Room[,] roomArray, Player p, Movement m)
@@ -251,7 +312,7 @@ public void EscapeMonster (Room r)
 {
 	if (r.RoomMonster != null) {
 		Monster mon = r.RoomMonster;
-		int playerDamage = p.hurt (mon.strength - p.defense);
+			int playerDamage = p.hurt (Mathf.Clamp(mon.strength - p.defense,1,100000));
 		if (p.currentHealth<=0) {
 			Application.LoadLevel (2);
 		}
@@ -259,7 +320,7 @@ public void EscapeMonster (Room r)
 	}
 	else if (r.RoomBoss != null) {
 		Boss boss = r.RoomBoss;
-		int playerDamage = p.hurt (boss.strength - p.defense);
+			int playerDamage = p.hurt (Mathf.Clamp(boss.strength - p.defense,1,10000));
 		if (p.currentHealth<=0) {
 			Application.LoadLevel (2);
 		}
@@ -275,7 +336,6 @@ public void LoadGameFromSessionData (SessionData sd){
 	roomArray2d = ldu.LoadFloor (sd.roomArray2d);
 	map.ClearMap ();
 	map.CreateMap (roomArray2d);
-
 }
 
 

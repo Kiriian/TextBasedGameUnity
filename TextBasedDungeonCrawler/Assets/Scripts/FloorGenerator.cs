@@ -109,7 +109,7 @@ public class FloorGenerator : ScriptableObject
 
 	private void AddBoss (int x, int y){
 		roomArray2d [x, y].RoomBoss = ScriptableObject.CreateInstance<Boss> ();
-		int i = Random.Range (0, 1);
+		int i = Random.Range (0, 2);
 		if (i==0) {
 			roomArray2d [x, y].RoomBoss.Golem ();
 		} else {

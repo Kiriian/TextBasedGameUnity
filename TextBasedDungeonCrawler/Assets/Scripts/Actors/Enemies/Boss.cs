@@ -31,8 +31,9 @@ public class Boss : Enemy {
 		maxMana = 0;
 		currentMana = 0;
 		chanceToHit = 10;
-		strength = Mathf.Clamp(11 * Main.floorNumber/5, 11, 10000);
+		strength = Mathf.Clamp(6 * Main.floorNumber/5, 6, 10000);
 		defense = Mathf.Clamp(6 * Main.floorNumber/5, 6, 10000);
+		intellengence = Mathf.Clamp(10* Main.floorNumber/5, 10, 10000);
 		droprate = 100;
 		itemRarity = 100;
 	}
