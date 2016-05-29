@@ -123,7 +123,7 @@ public class Equipment : Item {
 	public void Axe()
 	{
 		equipType = "weapon";
-		name = "Sword and Shield";
+		name = "Axe";
 		strengthMod = 6;
 		defenseMod = 0;
 		healthMod = 0;

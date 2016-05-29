@@ -211,8 +211,8 @@ public class FloorGenerator : ScriptableObject
 		// TODO: Make it so there's more than equipment being added to loot tables.
 		// Need to make it so that it's items in general, not just equipment.
 
-		// Instantiates a new piece of equipment.
-		Equipment equip = ScriptableObject.CreateInstance<Equipment>();
+
+
 		// Using Reflection to get all methods in Equipment.
 		System.Type t = typeof(Equipment);
 		MethodInfo[] allMethods = t.GetMethods ();
@@ -234,9 +234,15 @@ public class FloorGenerator : ScriptableObject
 			if (r != null) {
 				int rand = Random.Range (0, 20);
 				if (rand > 15) {
+					// Instantiates a new piece of equipment.
+					Equipment equip = ScriptableObject.CreateInstance<Equipment>();
 					int c = equipmentMethods.Count;
 					equipmentMethods [Random.Range (0, c)].Invoke (equip, null);
 					r.Items.Add (equip);
+				} else if (rand > 12){
+					HealingPotion pot = ScriptableObject.CreateInstance<HealingPotion> ();
+					pot.name = "Healing Potion";
+					r.Items.Add (pot);
 				}
 			}
 		}	
